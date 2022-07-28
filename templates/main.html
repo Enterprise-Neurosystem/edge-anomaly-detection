@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Failure Prediction</title>
+    <!--<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+
+
+</head>
+<body>
+    <div class="mainDiv">
+        <h3>Anomaly Detection</h3>
+        <!-- Tab links -->
+        <div class="tab">
+            <button id="PostgresBtn" class="tablinks" onclick="openTab(this, 'tab1')">Connect to a Postgres Database</button>
+            <button id="CsvBtn" class="tablinks" onclick="openTab(this, 'tab2')">Import your own .csv file</button>
+            <button id="GenerateDataBtn" class="tablinks" onclick="openTab(this, 'tab3')">Generate Synthetic Data</button>
+
+        </div>
+
+        <!-- Tab content -->
+        <div id="tab1" class="tabcontent">
+            <h3>Connect to a Postgres Database</h3>
+            <div class="postgresContainer">
+                <form id="displayForm" method="post">
+                    {% for col in col_list %}
+                        <label>
+                            <input type="radio" name="sensor_list" value='{{col}}'/>{{col}}
+                        </label>
+                    {% endfor %}
+                    <div class="displayContainer">
+                        <fieldset>
+                            <legend>Data Output</legend>
+                            <div class="dataMsg" id="dataMsgId"></div>
+                            <div id="graphBtnContainer" >
+                                <input type="button" id="graphBtn" value="Graph Model">
+                            </div>
+                        </fieldset>
+                        <a href="/dashapp/" class="dash-link">
+                        <span>Embedded Plotly Dash</span>
+                            <i class="fas fa-arrow-right"></i>
+                          </a>
+                        <iframe id="graphIFrame" class="graphIFrame">Generating Graph...</iframe>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="tab2" class="tabcontent">
+            <h3>Upload a CSV file</h3>
+            <div class="csvContainer">
+                <form id="csvForm" method="post">
+                    
+                    <div class="displayContainer">
+                        <fieldset>
+                            <legend>Data Output</legend>
+                            <div class="dataMsg" id="dataMsgId"></div>
+                            <div id="graphBtnContainer" >
+                                <input type="button" id="graphBtn" value="Graph Model">
+                            </div>
+                        </fieldset>
+                        <iframe id="graphIFrame" class="graphIFrame">Generating Graph...</iframe>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="tab3" class="tabcontent" style="display: none">
+            <h3>Generate Synthetic Data</h3>
+            <div class="GenerateDataContainer">
+                <form id="GenerateDataForm" method="post">
+                    
+                    <div class="displayContainer">
+                        <fieldset>
+                            <legend>Data Output</legend>
+                            <div class="dataMsg" id="dataMsgId"></div>
+                            <div id="graphBtnContainer" >
+                                <input type="button" id="graphBtn" value="Graph Model">
+                            </div>
+                        </fieldset>
+                        <iframe id="graphIFrame" class="graphIFrame">Generating Graph...</iframe>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="static/tabs.js" charset="utf-8"></script>
+    <script src="static/display.js"></script>
+
+</body>
+</html>
