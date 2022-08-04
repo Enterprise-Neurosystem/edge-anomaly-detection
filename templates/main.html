@@ -5,91 +5,143 @@
     <title>Failure Prediction</title>
     <!--<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">-->
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 
 
 </head>
-<body>
+<body onload="openTab('', 'tab1')" >
     <div class="mainDiv">
-        <h3>Anomaly Detection</h3>
+        <h2 class='title'>Anomaly Detection</h2>
         <!-- Tab links -->
         <div class="tab">
-            <button id="PostgresBtn" class="tablinks" onclick="openTab(this, 'tab1')">Connect to a Postgres Database</button>
-            <button id="CsvBtn" class="tablinks" onclick="openTab(this, 'tab2')">Import your own .csv file</button>
-            <button id="GenerateDataBtn" class="tablinks" onclick="openTab(this, 'tab3')">Generate Synthetic Data</button>
-
+            <button id="dataTab" class="tablinks" onclick="openTab(this, 'tab1')">Select a Data Source</button>
+            <button id="graphTab" class="tablinks" onclick="openTab(this, 'tab2')">Graph the Data</button>
         </div>
 
         <!-- Tab content -->
         <div id="tab1" class="tabcontent">
-            <h3>Connect to a Postgres Database</h3>
-            <div class="postgresContainer">
-                <form id="displayForm" method="post">
-                    {% for col in col_list %}
-                        <label>
-                            <input type="radio" name="sensor_list" value='{{col}}'/>{{col}}
+            
+            <form id="mainForm" method="post">
+
+                <div class="container">
+  
+                    <div class="control-group">
+                      <h1>Data Source</h1>
+                      <label class="control control--radio">Generate Synthetic Data
+                        <input type="radio" name="radio" value='synthetic' checked="checked"/>
+                        <div class="control__indicator"></div>
+                      </label>
+                      <label class="control control--radio">Import a .csv File
+                        <input type="radio" name="radio" value='csv' id='csvRadioInput'/>
+                        <div class="control__indicator"></div>
+                      </label>
+                      <label class="control control--radio">
+                          Connect to a  <a href='http://cloudbeaver-test-db02.apps.ieee.8goc.p1.openshiftapps.com/#/' target="_blank">
+                          Postgres Database </a> 
+                        <input type="radio" value='postgres' name="radio"/>
+                        <div class="control__indicator"></div>
+                      </label>
+                    </div>
+
+                    <div class="control-group" id="sensor_names">
+                      <h1>Column Name</h1>
+                      <div class="select">
+                        <select class="column" name='sensor_list'>
+                          <option>sensor_25</option>
+                          <option>sensor_11</option>
+                          <option>sensor_36</option>
+                          <option>sensor_34</option>
+                        </select>
+                        <div class="select__arrow"></div>
+                      </div>
+                    </div>
+
+                    <div class="control-group hidden" id='csv_group'>
+                      <h1>Import Csv</h1>
+                      
+                        <label class="control control--file">
+                            <input type="file" name="csv_input"> 
                         </label>
-                    {% endfor %}
-                    <div class="displayContainer">
-                        <fieldset>
-                            <legend>Data Output</legend>
-                            <div class="dataMsg" id="dataMsgId"></div>
-                            <div id="graphBtnContainer" >
-                                <input type="button" id="graphBtn" value="Graph Model">
-                            </div>
-                        </fieldset>
-                        <a href="/dashapp/" class="dash-link">
-                        <span>Embedded Plotly Dash</span>
-                            <i class="fas fa-arrow-right"></i>
-                          </a>
-                        <iframe id="graphIFrame" class="graphIFrame">Generating Graph...</iframe>
+
+                        <p>Type the Column Name</p>
+                        <label class="control control--text">
+                            <input type="text" name="col_name" >
+                        </label>
                     </div>
-                </form>
-            </div>
+
+                    <div class="control-group">
+                      <h1>Graph Params</h1>
+                      <div class="select">
+                        <label class = 'selectLabel'>Batch Size</label>
+                        <select name='batch'>
+                          <option>80</option>
+                          <option>70</option>
+                          <option>60</option>
+                          <option>50</option>
+                          <option>40</option>
+                        </select>
+                        <div class="select__arrow"></div>
+                      </div>
+                      <div class="select">
+                        <label class = 'selectLabel'>STD Threshold</label>
+                        <select name ='stds_list'>
+                          <option>4</option>
+                          <option>5</option>
+                          <option>6</option>
+                          <option>7</option>
+                          <option>8</option>
+                        </select>
+                        <div class="select__arrow"></div>
+                      </div>
+                      <div class="select">
+                        <label class = 'selectLabel'>Max Plot Points</label>
+                        <select name='window_size'>
+                          <option>100</option>
+                          <option>200</option>
+                          <option>300</option>
+                          <option>400</option>
+                        </select>
+                        <div class="select__arrow"></div>
+                      </div>
+                      <div class="select">
+                        <label class="selectLabel">Speed up</label>
+                        <select form ='mainForm' name='speed_up'>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>4</option>
+                          <option>0.5</option>
+                          <option>0.25</option>
+                        </select>
+                        <div class="select__arrow"></div>
+                      </div>
+                    </div>
+                </div>
+            </form>
+            <input type="button" id="submitData" value="Submit">
         </div>
 
-        <div id="tab2" class="tabcontent">
-            <h3>Upload a CSV file</h3>
-            <div class="csvContainer">
-                <form id="csvForm" method="post">
-                    
-                    <div class="displayContainer">
-                        <fieldset>
-                            <legend>Data Output</legend>
-                            <div class="dataMsg" id="dataMsgId"></div>
-                            <div id="graphBtnContainer" >
-                                <input type="button" id="graphBtn" value="Graph Model">
-                            </div>
-                        </fieldset>
-                        <iframe id="graphIFrame" class="graphIFrame">Generating Graph...</iframe>
-                    </div>
-                </form>
+        <div id="tab2" class="tabcontent">                 
+            
+            <div class='startStopButtons'>
+                <input type="button" id="startPlotBtn" value="Start Plot">
+                <input type="button" id="stopPlotBtn" value="Stop Plot">
+        
             </div>
-        </div>
-
-        <div id="tab3" class="tabcontent" style="display: none">
-            <h3>Generate Synthetic Data</h3>
-            <div class="GenerateDataContainer">
-                <form id="GenerateDataForm" method="post">
-                    
-                    <div class="displayContainer">
-                        <fieldset>
-                            <legend>Data Output</legend>
-                            <div class="dataMsg" id="dataMsgId"></div>
-                            <div id="graphBtnContainer" >
-                                <input type="button" id="graphBtn" value="Graph Model">
-                            </div>
-                        </fieldset>
-                        <iframe id="graphIFrame" class="graphIFrame">Generating Graph...</iframe>
-                    </div>
-                </form>
-            </div>
+            
+            <div id="graph"></div>
 
         </div>
+
+
+        
 
     </div>
+    
+
+    <script type="text/javascript" src="static/plot.js"></script>
+    <script type="text/javascript" src="static/messageHandler.js"></script>
     <script src="static/tabs.js" charset="utf-8"></script>
-    <script src="static/display.js"></script>
 
 </body>
 </html>

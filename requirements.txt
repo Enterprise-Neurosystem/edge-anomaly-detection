@@ -6,3 +6,5 @@ numpy==1.19.2
 matplotlib==3.4.1
 plotly==5.5.0
 gunicorn
+gretel-synthetics==0.18.1
+torch==1.11.0
