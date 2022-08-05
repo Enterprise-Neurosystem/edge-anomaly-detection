@@ -64,7 +64,6 @@ class SynthesizeDataManager:
                 row = df_sensor.loc[index,:]
                 sleep_period = (1/10) / float(speed_up)
                 time.sleep(sleep_period)
-                print(row[col_name])
 
                 yield [row['timestamp'], row[col_name]]
 
