@@ -4,6 +4,7 @@ This web app allows you to broadcast various sources of data in real time
 
 ## Quickstart
 
+Setup local development
 ```
 python3 -m venv venv
 . venv/bin/activate
