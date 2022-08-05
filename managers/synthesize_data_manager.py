@@ -33,7 +33,6 @@ class SynthesizeDataManager:
                 # print("row in reader: {}".format(row))
                 sleep_period = (1/10) / float(speed_up)
                 time.sleep(sleep_period)
-                print(row['timestamp'])
                 yield [row['timestamp'], row[col_name]]
 
     @staticmethod
