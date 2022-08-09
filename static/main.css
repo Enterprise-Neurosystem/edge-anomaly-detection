@@ -43,6 +43,47 @@ body {
     clip-path: polygon(0 0, 110% 0, 100% 70%, 0 -70%);
     }
 
+#graph {
+  margin-top: 50px;
+}
+
+
+#submitData{
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  margin-right: 40px;
+  background-color: #ccc;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+  margin:auto;
+}
+
+#submitData:hover {
+  background-color: #bbb;
+}
+#startPlotBtn,  #stopPlotBtn{
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  margin-right: 40px;
+  background-color: #ccc;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+  border: 1px solid #aaa;
+  margin:auto;
+  float:left;
+}
+
+#startPlotBtn:hover:not([disabled]),  #stopPlotBtn:hover{
+  background-color: #bbb;
+}
 .tab {
     overflow: hidden;
 }
@@ -61,6 +102,8 @@ body {
   background-color: #ccc;
   box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
 }
+
+
 
 /* Change background color of buttons on hover */
 .tab button:hover {
