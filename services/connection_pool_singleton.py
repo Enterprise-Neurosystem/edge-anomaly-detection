@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2 import pool
+import os
 
 class ConnectionPoolSingleton:
     """Singleton class that makes a pooled connection to a Postgres database"""
@@ -20,10 +21,10 @@ class ConnectionPoolSingleton:
             raise Exception("Cannot create more than one instance of this class")
         else:
             ConnectionPoolSingleton.__connection_pool = psycopg2.pool.ThreadedConnectionPool(1,100, 
-                                                                                             host='postgresql.test-db01.svc.cluster.local',
-                                                                                             user='user82M',
-                                                                                             password='q2s2gLeojWQFMkBa', 
-                                                                                             database ='sampledb')
+                                                                                             host='http://db-anomalydetect-postgres.chanowujpkf4.us-east-1.rds.amazonaws.com/',
+                                                                                             user='ad_postgres',
+                                                                                             password= os.environ.get('aws_secret_password'), 
+                                                                                             database ='db-anomalydetect-postgres')
     @staticmethod
     def getConnectionPool():
         """Instantiates ConnectionPoolSingleton and returns a pooled connection"""
