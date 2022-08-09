@@ -16,7 +16,6 @@ let eventSourceGraph;
 
 function startPlotProcess(){
     console.log("startProcess()");
-    initPlot();
     try {
         eventSourceGraph.close();
     } catch (e) {

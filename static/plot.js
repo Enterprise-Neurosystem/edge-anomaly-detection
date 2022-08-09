@@ -73,13 +73,15 @@ let initData = [{ // Data points
 // First do a deep clone of the data array of traces.  The clone uses values from the empty array, initData
 // Then call Plotly.newPlot() using the cloned array of empty traces to start a new plot.
 function initPlot(rangeData){
-    layout['yaxis']['range'] = rangeData
+    let rangeJsonObj = JSON.parse(rangeData);
     data[0].x = Array.from(initData[0].x);
     data[0].y = Array.from(initData[0].y);
     data[1].x = Array.from(initData[1].x);
     data[1].y = Array.from(initData[1].y);
     data[2].x = Array.from(initData[2].x);
     data[2].y = Array.from(initData[2].y);
+    let yAxis = layout.yaxis
+    yAxis.range = rangeJsonObj.range;
     Plotly.newPlot('graph', data, layout);
 }
 

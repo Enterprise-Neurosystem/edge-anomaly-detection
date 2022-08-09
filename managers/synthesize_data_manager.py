@@ -15,7 +15,6 @@ class SynthesizeDataManager:
         self.range = [0,1]
 
 
-    @staticmethod
     def csv_line_reader(self, file_name, col_name, speed_up):
         """Use data from a csv to periodically yield a row of data
 
@@ -28,14 +27,13 @@ class SynthesizeDataManager:
         with open(file_name, 'r') as read_obj:
             dict_reader = DictReader(read_obj)
             pandas_df = pd.read_csv(read_obj)
-            self.range = [pandas_df[col_name].min, pandas_df[col_name].max]
+            self.range = [pandas_df[col_name].min(), pandas_df[col_name].max()]
             for row in dict_reader:
                 # print("row in reader: {}".format(row))
                 sleep_period = (1/10) / float(speed_up)
                 time.sleep(sleep_period)
                 yield [row['timestamp'], row[col_name]]
 
-    @staticmethod
     def load_sensor(self, col_name, speed_up):
         if col_name=='':
             col_name = 'sensor_25'
@@ -43,7 +41,7 @@ class SynthesizeDataManager:
         df_data = query.get_all_data()
         df_data['timestamp'] = df_data['sensortimestamp'].to_string()
         df_sensor = df_data[['timestamp', col_name]]
-        self.range = [df_sensor[col_name].min, df_sensor[col_name].max]
+        self.range = [df_sensor[col_name].min(), df_sensor[col_name].max()]
         for index in df_sensor.index:
                 # print("row in reader: {}".format(row))
                 row = df_sensor.loc[index,:]
@@ -51,13 +49,12 @@ class SynthesizeDataManager:
                 time.sleep(sleep_period)
                 yield [row['timestamp'], row[col_name]]
 
-    @staticmethod
     def synthesize_data(self, col_name, speed_up):
         generator = Data_Synthesizer
         df_data = generator.synthesize_data(col_name)
-        
+
         df_sensor = df_data[['timestamp', col_name]]
-        self.range = [df_sensor[col_name].min, df_sensor[col_name].max]
+        self.range = [df_sensor[col_name].min(), df_sensor[col_name].max()]
 
         for index in df_sensor.index:
                 # print("row in reader: {}".format(row))

@@ -70,17 +70,20 @@ class PreprocessDataManager:
         plot_color = 'green'
         graphRange = [0,1]
 
+        sdm = SynthesizeDataManager()
         # This generator yields when one point is available from the data source
         if (self.data_source == 'csv'):
-            gen = SynthesizeDataManager.csv_line_reader(self.file_name, self.col_name, self.speed_up)  # this is a generator
+            gen = sdm.csv_line_reader(self.file_name, self.col_name, self.speed_up)  # this is a generator
         elif (self.data_source == 'postgres'):
-            gen = SynthesizeDataManager.load_sensor(self.col_name, self.speed_up)
+            gen = sdm.load_sensor(self.col_name, self.speed_up)
         else:
-            gen = SynthesizeDataManager.synthesize_data(self.col_name, self.speed_up)
+            gen = sdm.synthesize_data(self.col_name, self.speed_up)
+            
 
-        #graphRange = SynthesizeDataManager.return_range()
-        #print(graphRange)
-        self.init_plot(graphRange)   # Initialize plot
+        row = next(gen, None)  # list of two strings
+        graphRange = sdm.return_range()
+        json_data = {'range':graphRange}
+        yield "event: initialize\ndata: " + json.dumps(json_data) + "\n\n"   # Initialize plot
 
         while True:
             # print("rowcounter: {}".format(self.row_counter))
