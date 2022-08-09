@@ -19,7 +19,7 @@ class SynthesizeDataManager:
         """Use data from a csv to periodically yield a row of data
 
         :param file_name: Name of csv file as source of data
-        :param col_nagitme:  Name of column to extract
+        :param col_name:  Name of column to extract
         :return: none
         ..notes:: This static method has no return.  Instead, it yields a row of data that has been read from
         a data source.
