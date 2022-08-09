@@ -64,6 +64,5 @@ class SynthesizeDataManager:
 
                 yield [row['timestamp'], row[col_name]]
 
-    @staticmethod
     def return_range(self):
         return self.range
