@@ -33,16 +33,20 @@ class SynthesizeDataManager:
                 # print("row in reader: {}".format(row))
                 sleep_period = (1/10) / float(speed_up)
                 time.sleep(sleep_period)
-                yield [row['timestamp'], row[col_name]]
+                yield [row[pandas_df.columns[0]], row[col_name]]
 
     def load_sensor(self, col_name, speed_up):
-        if col_name=='':
-            col_name = 'sensor_25'
+        
         query = AnomalyDataService
         df_data = query.get_all_data()
-        df_data['timestamp'] = df_data['sensortimestamp'].to_string()
+        df_data = df_data.sort_values(by=df_data.columns[0],ascending=True)
+        df_data['timestamp'] = df_data[df_data.columns[0]].apply(str)
+        print(df_data['timestamp'])
+        if col_name not in list(df_data.columns):
+            col_name =  df_data.columns[1]
         df_sensor = df_data[['timestamp', col_name]]
         self.range = [df_sensor[col_name].min(), df_sensor[col_name].max()]
+
         for index in df_sensor.index:
                 # print("row in reader: {}".format(row))
                 row = df_sensor.loc[index,:]
