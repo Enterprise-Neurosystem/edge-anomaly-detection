@@ -24,7 +24,7 @@ class ConnectionPoolSingleton:
                                                                                              host='db-anomalydetect-postgres.chanowujpkf4.us-east-1.rds.amazonaws.com',
                                                                                              user='ad_postgres',
                                                                                              password= os.environ.get('aws_secret_password'), 
-                                                                                             database ='db-anomalydetect-postgres')
+                                                                                             database ='postgres')
     @staticmethod
     def getConnectionPool():
         """Instantiates ConnectionPoolSingleton and returns a pooled connection"""
