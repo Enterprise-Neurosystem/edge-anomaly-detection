@@ -83,6 +83,7 @@ class PreprocessDataManager:
         row = next(gen, None)  # list of two strings
         graphRange = sdm.return_range()
         json_data = {'range':graphRange}
+
         yield "event: initialize\ndata: " + json.dumps(json_data) + "\n\n"   # Initialize plot
 
         while True:
@@ -91,6 +92,7 @@ class PreprocessDataManager:
             # return None.
             row = next(gen, None)  # list of two strings
             if row is None:
+                print('row is none')
                 # print("Job Finished")
                 # Generator is exhausted, yield message "jobfinished"
                 yield "event: jobfinished\ndata: " + "none" + "\n\n"

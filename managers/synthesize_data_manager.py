@@ -26,9 +26,10 @@ class SynthesizeDataManager:
         """
         with open(file_name, 'r') as read_obj:
             dict_reader = DictReader(read_obj)
-            pandas_df = pd.read_csv(read_obj)
+            pandas_df = pd.read_csv(file_name)
             self.range = [pandas_df[col_name].min(), pandas_df[col_name].max()]
             for row in dict_reader:
+                
                 # print("row in reader: {}".format(row))
                 sleep_period = (1/10) / float(speed_up)
                 time.sleep(sleep_period)
