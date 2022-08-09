@@ -19,16 +19,17 @@ class SynthesizeDataManager:
         """Use data from a csv to periodically yield a row of data
 
         :param file_name: Name of csv file as source of data
-        :param col_name:  Name of column to extract
+        :param col_nagitme:  Name of column to extract
         :return: none
         ..notes:: This static method has no return.  Instead, it yields a row of data that has been read from
         a data source.
         """
         with open(file_name, 'r') as read_obj:
             dict_reader = DictReader(read_obj)
-            pandas_df = pd.read_csv(read_obj)
+            pandas_df = pd.read_csv(file_name)
             self.range = [pandas_df[col_name].min(), pandas_df[col_name].max()]
             for row in dict_reader:
+                
                 # print("row in reader: {}".format(row))
                 sleep_period = (1/10) / float(speed_up)
                 time.sleep(sleep_period)
@@ -64,6 +65,5 @@ class SynthesizeDataManager:
 
                 yield [row['timestamp'], row[col_name]]
 
-    @staticmethod
     def return_range(self):
         return self.range
