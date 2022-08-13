@@ -10,17 +10,20 @@ class PreprocessDataManager:
     and the method, process_point() is used to process the point.   When the point has been processed, it
     yields a message that contains json data that will be consumed.
     """
-    def __init__(self, regress_group_size, plot_scrolling_size, col_name, anomaly_std_factor, csv_file_name=None):
+    def __init__(self, regress_group_size, plot_scrolling_size, col_name, anomaly_std_factor,
+                 points_per_sec, csv_file_name=None):
         """
         :param regress_group_size:  Size in data points of how many points will be included in the linear regression
         calculation.
         :type regress_group_size: int
-        :param points_group_size: How many data points should be consumed in one batch.  Currently only the value
-        of 1 is used.
+        :param plot_scrolling_size How many pts will be displayed before they scroll off the page.
+        :type: int
         :param col_name: Name of data column that holds the data to be processed
         :type: string
         :param anomaly_std_factor: Used to define the threshold that defines an anomaly.  This factor will
         be multiplied by the data's STD to define the threshold.
+        :type: int
+        :param points_per_sec How many points per second will be generated
         :type: int
         :param csv_file_name: Name of csv file to be used as the data source
         :type: string
@@ -30,6 +33,7 @@ class PreprocessDataManager:
         #self.points_group_size = int(points_group_size)  # Not used in this first version
         self.plot_scrolling_size = int(plot_scrolling_size)
         self.col_name = col_name  # col name of feature to plot
+        self.points_per_sec = points_per_sec
         self.file_name = csv_file_name
         self.init_plot()   # Initialize plot
         self.regress_buffX = []   # Fixed size buffer.  Size is limited to value of self.regress_plot_size
@@ -64,7 +68,7 @@ class PreprocessDataManager:
         y_percent_diff_old = 0
         plot_color = 'green'
         # This generator yields when one point is available from the data source
-        gen = SynthesizeDataManager.csv_line_reader(self.file_name, self.col_name)  # this is a generator
+        gen = SynthesizeDataManager.csv_line_reader(self.file_name, self.col_name, self.points_per_sec)  # this is a generator
         while True:
             # print("rowcounter: {}".format(self.row_counter))
             # Use the generator's next() with a param of None.  If the generator is out of data, next() will
@@ -109,7 +113,7 @@ class PreprocessDataManager:
                                                  x_old_p, x_new_p, y_percent_diff_old, y_percent_diff,
                                                  plot_color, self.row_counter)
                     # print("Regress slope: {}   Regress intspt: {}".format(fit[0],fit[1]))
-                    print("Server json data: {} ".format(json_data) )
+                    # print("Server json data: {} ".format(json_data) )
                     y_percent_diff_old = y_percent_diff_new
                     plot_color = 'green'
                     self.row_counter = self.row_counter + 1
