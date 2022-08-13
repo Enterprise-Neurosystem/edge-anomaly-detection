@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Response, request
 from managers.preprocess_data_manager import PreprocessDataManager
-from utils.data_file_manager import DataFileManager
+from utilities.data_file_manager import DataFileManager
 from os.path import join
 app = Flask(__name__)
 
