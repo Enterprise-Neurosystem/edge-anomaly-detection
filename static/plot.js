@@ -1,3 +1,4 @@
+
 var graph = document.getElementById("graph");
 let data = [{ // Data points
         x: [],
@@ -72,26 +73,25 @@ let initData = [{ // Data points
 
 // First do a deep clone of the data array of traces.  The clone uses values from the empty array, initData
 // Then call Plotly.newPlot() using the cloned array of empty traces to start a new plot.
-function initPlot(rangeData){
-    let rangeJsonObj = JSON.parse(rangeData);
+function initPlot(){
     data[0].x = Array.from(initData[0].x);
     data[0].y = Array.from(initData[0].y);
     data[1].x = Array.from(initData[1].x);
     data[1].y = Array.from(initData[1].y);
     data[2].x = Array.from(initData[2].x);
     data[2].y = Array.from(initData[2].y);
-    let yAxis = layout.yaxis
-    yAxis.range = rangeJsonObj.range;
     Plotly.newPlot('graph', data, layout);
 }
 
 var msgCounter = 0; // Another way of shifting. Not used in this code.
 
 function updatePlot(jsonData){
-    //console.log("plot.js updatePlot()  " + jsonData);
+    console.log("plot.js updatePlot()  " + jsonData);
     //console.log("msgCounter: " + msgCounter++);
-    let jsonObj = JSON.parse(jsonData); 
-    // jsonObj is in the form:
+    let max = plot_scrolling_size;    //this value obtained from messageHandler.js
+
+    let jsonObj = JSON.parse(jsonData);  // json obj is in form:  ['timestamp', 'sensorVal']
+    // Json is in the form:
      // {'plotpoint': [timestamp, sensor_val],
      //    'regress': {'xs': [x1, x2],
      //                'ys': [y1, y2]
@@ -102,7 +102,6 @@ function updatePlot(jsonData){
      //             'y_diff2': y_percent_diff,
      //             'plot_color': plot_color,
       //            'row_counter': row_counter
-      //            'max_window_size': max_window_size
       //            }
      //  }
 
@@ -122,8 +121,6 @@ function updatePlot(jsonData){
     // Next two values would be used to change the plot color in real time, but Plotly.js does not support
     let plot_color = diffNode.plot_color;
     let row_counter = diffNode.row_counter;
-
-    let max = diffNode.max_window_size;
 
     // Add new data point as well as calculated data for regression line start and end points as well as the
     // y difference plot.  Note there are three traces.  The first two traces use the same layout named yaxis.

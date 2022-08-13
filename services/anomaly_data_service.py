@@ -8,7 +8,7 @@ class AnomalyDataService:
     @staticmethod 
     def get_all_data():
        """Returns all rows from table and reads it into a pandas dataframe"""
-       GET_ALL_ROWS_SQL = 'SELECT * FROM prediction'
+       GET_ALL_ROWS_SQL = 'SELECT * FROM anomaly'
        pool = ConnectionPoolSingleton.getConnectionPool()
        conn = pool.getconn()
        cursor = conn.cursor()

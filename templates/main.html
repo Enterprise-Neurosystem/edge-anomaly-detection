@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Anomaly Detection</h1>
+    <div>
+        <label>Regression Group Size</label>
+            <select id="regression_group_size">
+                <option value="80">80</option>
+                <option value="70" selected>70</option>
+                <option value="60">60</option>
+                <option value="50">50</option>
+                <option value="40">40</option>
+            </select>
+        <label >STD Threshold</label>
+            <select id="std_threshold">
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+        <label>Plot Scrolling Size</label>
+            <select id="plot_scrolling_size">
+                <option value="60">60</option>
+                <option value="120">120</option>
+                <option value="240">240</option>
+                <option value="480">480</option>
+                <option value="720" selected>720</option>
+            </select>
+        <label>Points per Second</label>
+            <select id="pts_per_sec">
+                <option value="2">2</option>
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+            </select>
+    </div>
+
+    <div>
+        <input type="button" id="startPlotBtn" value="Start Plot">
+        <input type="button" id="stopPlotBtn" value="Stop Plot">
+    </div>
+
+    <div id="graph"></div>
+
+    <script type="text/javascript" src="static/plot.js"></script>
+    <script type="text/javascript" src="static/messageHandler.js"></script>
+
+</body>
+</html>
