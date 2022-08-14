@@ -26,10 +26,10 @@ def generate_data():
     anomaly_std_factor = request.args.get('std_threshold')
     plot_scrolling_size = request.args.get('plot_scrolling_size')
     file_name_only = request.args.get('filename')
-    points_per_sec = int(request.args.get('points_per_sec'))
+    points_per_sec = int(request.args.get('pts_per_sec'))
     col_name = 'pressure'
-    path = 'static/data'
-    file_name = join(path, file_name_only)
+    path = 'data'
+    file_name = path + '/' + file_name_only
 
     pdm = PreprocessDataManager(regression_group_size,
                                 plot_scrolling_size, col_name, anomaly_std_factor, points_per_sec,

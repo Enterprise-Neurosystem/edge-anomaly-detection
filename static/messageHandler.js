@@ -40,7 +40,7 @@ function startPlotProcess(){
      //                           csv_file_name=file_name)
 
     const url = '/generateData?' + 'regression_size=' + regression_group_size + '&std_threshold=' + std_threshold +
-        '&plot_scrolling_size=' + plot_scrolling_size;
+        '&plot_scrolling_size=' + plot_scrolling_size + '&pts_per_sec=' + pts_per_sec;
     console.log(url)
     const urlParams = new URLSearchParams(url);
     /*url.searchParams.append('regression_size', regression_group_size);
