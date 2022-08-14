@@ -11,7 +11,7 @@ def calculatePerCentDiffs(xDataVals, yDataVals, regSlope, regIntersept):
     for point in zip(xDataVals, yDataVals):
         regY = regSlope * point[0] + regIntersept
         yErrors.append(100 * (point[1] - regY) / (point[1] + 0.01))
-   
+
     return np.array(yErrors)
 
 
@@ -28,13 +28,13 @@ def find_anomalies(df):
     # Define datetime window size
     datetimeWindowSize = 43
     # Get data as two numpy arrays: xvals and yvals
-    xStrDates = df.iloc[:,0]
-    yVals = df.iloc[:,1]
+    xStrDates = df.iloc[:, 0]
+    yVals = df.iloc[:, 1]
 
     # Convert dates as strings to dates as datetime.datetime values
-    #dates_list = [dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S') for date in xStrDates]
+    # dates_list = [dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S') for date in xStrDates]
     # Convert list of datetime.datetime values to ndarray of
-    xVals = mdates.date2num(df.iloc[:,0])
+    xVals = mdates.date2num(df.iloc[:, 0])
 
     fit = np.polyfit(np.array(xVals), np.array(yVals), deg=1)
 
@@ -45,17 +45,19 @@ def find_anomalies(df):
 
     anomalies = list()
     for diff, index in zip(yPerCentDiffs, df.index.values):
-        if (diff < mean - anomalyStdDevFactor * std) or (diff > mean + anomalyStdDevFactor * std):
+        if (diff < mean - anomalyStdDevFactor * std) or (
+            diff > mean + anomalyStdDevFactor * std
+        ):
             anomalies.append(index)
 
-    print('**********************************')
+    print("**********************************")
     print(len(anomalies))
-    print('**********************************')
+    print("**********************************")
     return anomalies
 
 
-def load_sensor(sensor='sensor_25'):
+def load_sensor(sensor="sensor_25"):
     query = AnomalyDataService
     df_data = query.get_all_data()
-    df_sensor = df_data[['sensortimestamp', sensor]]
+    df_sensor = df_data[["sensortimestamp", sensor]]
     return df_sensor, find_anomalies(df_sensor)
