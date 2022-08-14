@@ -10,7 +10,7 @@ application = app
 
 @app.route('/')
 def main():
-    file_names = DataFileManager.get_file_names_in_path('static/data')
+    file_names = DataFileManager.get_file_names_in_path('data')
     return render_template('main.html', filenames=file_names)
 
 
