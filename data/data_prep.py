@@ -1,10 +1,11 @@
 from services.anomaly_data_service import AnomalyDataService
-from io import BytesIO
-import base64
-import pandas as pd
+
 import matplotlib.dates as mdates
 import numpy as np
 
+"""
+This file was used as a utility for experimentation.  It is not used in the application
+"""
 
 def calculatePerCentDiffs(xDataVals, yDataVals, regSlope, regIntersept):
     yErrors = []

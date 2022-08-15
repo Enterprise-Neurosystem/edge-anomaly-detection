@@ -1,4 +1,3 @@
-
 var graph = document.getElementById("graph");
 let data = [{ // Data points
         x: [],
@@ -85,25 +84,25 @@ function initPlot(){
 
 var msgCounter = 0; // Another way of shifting. Not used in this code.
 
-function updatePlot(jsonData){
-    console.log("plot.js updatePlot()  " + jsonData);
+function updatePlot(jsonData) {
+    //console.log("plot.js updatePlot()  " + jsonData);
     //console.log("msgCounter: " + msgCounter++);
     let max = plot_scrolling_size;    //this value obtained from messageHandler.js
 
     let jsonObj = JSON.parse(jsonData);  // json obj is in form:  ['timestamp', 'sensorVal']
     // Json is in the form:
-     // {'plotpoint': [timestamp, sensor_val],
-     //    'regress': {'xs': [x1, x2],
-     //                'ys': [y1, y2]
-     //                },
-     //    'calc': {'x1': x_old_p,
-     //             'x2': x_new_p,
-     //             'y_diff1': y_percent_diff_old,
-     //             'y_diff2': y_percent_diff,
-     //             'plot_color': plot_color,
-      //            'row_counter': row_counter
-      //            }
-     //  }
+    // {'plotpoint': [timestamp, sensor_val],
+    //    'regress': {'xs': [x1, x2],
+    //                'ys': [y1, y2]
+    //                },
+    //    'calc': {'x1': x_old_p,
+    //             'x2': x_new_p,
+    //             'y_diff1': y_percent_diff_old,
+    //             'y_diff2': y_percent_diff,
+    //             'plot_color': plot_color,
+    //            'row_counter': row_counter
+    //            }
+    //  }
 
     let timestamp = jsonObj.plotpoint[0];
     let sensorValue = jsonObj.plotpoint[1];
@@ -130,19 +129,7 @@ function updatePlot(jsonData){
         //x: [[timestamp], [x1, x2], [diff_x1, diff_x2]],
         //y: [[sensorValue], [y1,y2], [diff_y1, diff_y2]]
         x: [[timestamp], [x1, x2], [diff_x2]],
-        y: [[sensorValue], [y1,y2], [diff_y2]]
+        y: [[sensorValue], [y1, y2], [diff_y2]]
 
-    }, [0, 1, 2], max);  // The array denotes to plot all three traces(0 based).  Keep only last max data points
-
-
-    // NOTE:  This code below was an attempt to dynamically change the color of the Percent Diff plot to red whenever
-    // the plot went beyond the acceptable range.  Plotly.js does not support such a feature.
-
-    //if(plot_color != null){
-    //    let updateStr = 'marker.color[' + row_counter + ']';
-        //Plotly.restyle('graph', editObj, [2]);
-    //    Plotly.react(graph, {[updateStr]: plot_color}, null, [2]);
-
-    //}
-
+    }, [0, 1, 2], max); // The array denotes to plot all three traces(0 based). Keep only last max data points
 }
