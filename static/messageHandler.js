@@ -1,4 +1,5 @@
 // This script first creates listeners for the start and stop buttons.
+// This script first creates listeners for the start and stop buttons.
 // It also creates an EventSource that is linked to the url, '/generateData'. Once instantiated, the
 // EventSource establishes a permanent socket that only allows server push communication.  In this
 // application there are three event messages that are pushed to the browser: 'update', and
@@ -15,15 +16,17 @@ let eventSourceGraph;
 function startPlotProcess(){
     console.log("startProcess()");
 
-    var regression_group_sizeOBJ   = document.getElementById("regression_group_size")
-    var std_thresholdOBJ           = document.getElementById("std_threshold")
-    var plot_scrolling_sizeOBJ     = document.getElementById("plot_scrolling_size")
-    var pts_per_secOBJ             = document.getElementById("pts_per_sec")
+    var regression_group_sizeOBJ   = document.getElementById("regression_group_size");
+    var std_thresholdOBJ           = document.getElementById("std_threshold");
+    var plot_scrolling_sizeOBJ     = document.getElementById("plot_scrolling_size");
+    var pts_per_secOBJ             = document.getElementById("pts_per_sec");
+    var selected_fileOBJ           = document.getElementById("dataFileNames");
 
-    var regression_group_size   = regression_group_sizeOBJ.options[regression_group_sizeOBJ.selectedIndex].text
-    var std_threshold           = std_thresholdOBJ.options[std_thresholdOBJ.selectedIndex].text
-    var plot_scrolling_size     = plot_scrolling_sizeOBJ.options[plot_scrolling_sizeOBJ.selectedIndex].text
-    var pts_per_sec             = pts_per_secOBJ.options[pts_per_secOBJ.selectedIndex].text
+    var regression_group_size   = regression_group_sizeOBJ.options[regression_group_sizeOBJ.selectedIndex].text;
+    var std_threshold           = std_thresholdOBJ.options[std_thresholdOBJ.selectedIndex].text;
+    var plot_scrolling_size     = plot_scrolling_sizeOBJ.options[plot_scrolling_sizeOBJ.selectedIndex].text;
+    var pts_per_sec             = pts_per_secOBJ.options[pts_per_secOBJ.selectedIndex].text;
+    var filename                = selected_fileOBJ.options[selected_fileOBJ.selectedIndex].text;
 
     initPlot();
     if(eventSourceGraph){
@@ -40,7 +43,7 @@ function startPlotProcess(){
      //                           csv_file_name=file_name)
 
     const url = '/generateData?' + 'regression_size=' + regression_group_size + '&std_threshold=' + std_threshold +
-        '&plot_scrolling_size=' + plot_scrolling_size + '&pts_per_sec=' + pts_per_sec;
+        '&plot_scrolling_size=' + plot_scrolling_size + '&filename=' + filename + '&points_per_sec=' + pts_per_sec;
     console.log(url)
     const urlParams = new URLSearchParams(url);
     /*url.searchParams.append('regression_size', regression_group_size);

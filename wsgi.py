@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Response, request
 from managers.preprocess_data_manager import PreprocessDataManager
-from utilities.data_file_manager import DataFileManager
+from utils.data_file_manager import DataFileManager
 from os.path import join
 app = Flask(__name__)
 
@@ -25,11 +25,9 @@ def generate_data():
     regression_group_size = request.args.get('regression_size')
     anomaly_std_factor = request.args.get('std_threshold')
     plot_scrolling_size = request.args.get('plot_scrolling_size')
-    file_name_only = request.args.get('filename')
-    points_per_sec = int(request.args.get('pts_per_sec'))
+    file_name = request.args.get('filename')
+    points_per_sec = int(request.args.get('points_per_sec'))
     col_name = 'pressure'
-    path = 'data'
-    file_name = path + '/' + file_name_only
 
     pdm = PreprocessDataManager(regression_group_size,
                                 plot_scrolling_size, col_name, anomaly_std_factor, points_per_sec,
