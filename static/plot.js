@@ -72,39 +72,37 @@ let initData = [{ // Data points
 
 // First do a deep clone of the data array of traces.  The clone uses values from the empty array, initData
 // Then call Plotly.newPlot() using the cloned array of empty traces to start a new plot.
-function initPlot(rangeData){
-    let rangeJsonObj = JSON.parse(rangeData);
+function initPlot(){
     data[0].x = Array.from(initData[0].x);
     data[0].y = Array.from(initData[0].y);
     data[1].x = Array.from(initData[1].x);
     data[1].y = Array.from(initData[1].y);
     data[2].x = Array.from(initData[2].x);
     data[2].y = Array.from(initData[2].y);
-    let yAxis = layout.yaxis
-    yAxis.range = rangeJsonObj.range;
     Plotly.newPlot('graph', data, layout);
 }
 
 var msgCounter = 0; // Another way of shifting. Not used in this code.
 
-function updatePlot(jsonData){
+function updatePlot(jsonData) {
     //console.log("plot.js updatePlot()  " + jsonData);
     //console.log("msgCounter: " + msgCounter++);
-    let jsonObj = JSON.parse(jsonData); 
-    // jsonObj is in the form:
-     // {'plotpoint': [timestamp, sensor_val],
-     //    'regress': {'xs': [x1, x2],
-     //                'ys': [y1, y2]
-     //                },
-     //    'calc': {'x1': x_old_p,
-     //             'x2': x_new_p,
-     //             'y_diff1': y_percent_diff_old,
-     //             'y_diff2': y_percent_diff,
-     //             'plot_color': plot_color,
-      //            'row_counter': row_counter
-      //            'max_window_size': max_window_size
-      //            }
-     //  }
+    let max = plot_scrolling_size;    //this value obtained from messageHandler.js
+
+    let jsonObj = JSON.parse(jsonData);  // json obj is in form:  ['timestamp', 'sensorVal']
+    // Json is in the form:
+    // {'plotpoint': [timestamp, sensor_val],
+    //    'regress': {'xs': [x1, x2],
+    //                'ys': [y1, y2]
+    //                },
+    //    'calc': {'x1': x_old_p,
+    //             'x2': x_new_p,
+    //             'y_diff1': y_percent_diff_old,
+    //             'y_diff2': y_percent_diff,
+    //             'plot_color': plot_color,
+    //            'row_counter': row_counter
+    //            }
+    //  }
 
     let timestamp = jsonObj.plotpoint[0];
     let sensorValue = jsonObj.plotpoint[1];
@@ -123,8 +121,6 @@ function updatePlot(jsonData){
     let plot_color = diffNode.plot_color;
     let row_counter = diffNode.row_counter;
 
-    let max = diffNode.max_window_size;
-
     // Add new data point as well as calculated data for regression line start and end points as well as the
     // y difference plot.  Note there are three traces.  The first two traces use the same layout named yaxis.
     // The third trace uses the layout named yaxis2.  This naming convention follows that of plotly.js
@@ -133,19 +129,7 @@ function updatePlot(jsonData){
         //x: [[timestamp], [x1, x2], [diff_x1, diff_x2]],
         //y: [[sensorValue], [y1,y2], [diff_y1, diff_y2]]
         x: [[timestamp], [x1, x2], [diff_x2]],
-        y: [[sensorValue], [y1,y2], [diff_y2]]
+        y: [[sensorValue], [y1, y2], [diff_y2]]
 
-    }, [0, 1, 2], max);  // The array denotes to plot all three traces(0 based).  Keep only last max data points
-
-
-    // NOTE:  This code below was an attempt to dynamically change the color of the Percent Diff plot to red whenever
-    // the plot went beyond the acceptable range.  Plotly.js does not support such a feature.
-
-    //if(plot_color != null){
-    //    let updateStr = 'marker.color[' + row_counter + ']';
-        //Plotly.restyle('graph', editObj, [2]);
-    //    Plotly.react(graph, {[updateStr]: plot_color}, null, [2]);
-
-    //}
-
+    }, [0, 1, 2], max); // The array denotes to plot all three traces(0 based). Keep only last max data points
 }

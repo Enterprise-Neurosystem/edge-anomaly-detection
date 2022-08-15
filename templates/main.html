@@ -1,147 +1,84 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Failure Prediction</title>
-    <!--<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <title>Title</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
-<body onload="openTab('', 'tab1')" >
+<body>
     <div class="mainDiv">
-        <h2 class='title'>Anomaly Detection</h2>
-        <!-- Tab links -->
-        <div class="tab">
-            <button id="dataTab" class="tablinks" onclick="openTab(this, 'tab1')">Select a Data Source</button>
-            <button id="graphTab" class="tablinks" onclick="openTab(this, 'tab2')">Graph the Data</button>
-        </div>
-
-        <!-- Tab content -->
-        <div id="tab1" class="tabcontent">
-            
-            <form id="mainForm" method="post">
-
-                <div class="container">
-  
-                    <div class="control-group">
-                      <h1>Data Source</h1>
-                      <label class="control control--radio">Generate Synthetic Data
-                        <input type="radio" name="radio" value='synthetic' checked="checked"/>
-                        <div class="control__indicator"></div>
-                      </label>
-                      <label class="control control--radio">Import a .csv File
-                        <input type="radio" name="radio" value='csv' id='csvRadioInput'/>
-                        <div class="control__indicator"></div>
-                      </label>
-                      <label class="control control--radio">
-                          Connect to a  <a href='http://cloudbeaver-db-03.apps.ieee.8goc.p1.openshiftapps.com/#/' target="_blank">
-                          Postgres Database </a> 
-                        <input type="radio" value='postgres' name="radio"/>
-                        <div class="control__indicator"></div>
-                      </label>
+        <h1>Anomaly Detection</h1>
+        <div class="tabcontent">
+            <div class="trainContainer">
+                <fieldset>
+                    <legend>Data Source</legend>
+                    <div class="featureGrid">
+                        <div class="spanTwoCols">
+                            <select id="dataFileNames">
+                                {% for onefile in filenames %}
+                                    <option value="{{ onefile }}">{{ onefile }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="control-group" id="sensor_names">
-                      <h1>Column Name</h1>
-                      <div class="select">
-                        <select class="column" name='sensor_list'>
-                          <option>sensor_25</option>
-                          <option>sensor_11</option>
-                          <option>sensor_36</option>
-                          <option>sensor_34</option>
-                        </select>
-                        <div class="select__arrow"></div>
-                      </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Plot Parameters</legend>
+                    <div class="featureGrid">
+                        <div >
+                            <label for="regression_group_size">Regression Group Size</label>
+                                <select id="regression_group_size">
+                                    <option value="80">80</option>
+                                    <option value="70" selected>70</option>
+                                    <option value="60">60</option>
+                                    <option value="50">50</option>
+                                    <option value="40">40</option>
+                                </select>
+                        </div>
+                        <div >
+                        <label for="std_threshold">STD Threshold</label>
+                            <select id="std_threshold">
+                                <option value="4" selected>4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                        </div>
+                        <div>
+                        <label for="plot_scrolling_size">Plot Scrolling Size</label>
+                            <select id="plot_scrolling_size">
+                                <option value="60">60</option>
+                                <option value="120">120</option>
+                                <option value="240">240</option>
+                                <option value="480">480</option>
+                                <option value="720" selected>720</option>
+                            </select>
+                        </div>
+                        <div>
+                        <label for="pts_per_sec">Points per Second</label>
+                            <select id="pts_per_sec">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                            </select>
+                        </div>
                     </div>
+                </fieldset>
 
-                    <div class="control-group hidden" id='csv_group'>
-                      <h1>Import Csv</h1>
-                      
-                        <label class="control control--file">
-                            <input type="file" name="csv_input"> 
-                        </label>
-
-                        <p>Type the Column Name</p>
-                        <label class="control control--text">
-                            <input type="text" name="col_name" >
-                        </label>
-                    </div>
-
-                    <div class="control-group">
-                      <h1>Graph Params</h1>
-                      <div class="select">
-                        <label class = 'selectLabel'>Batch Size</label>
-                        <select name='batch'>
-                          <option>80</option>
-                          <option>70</option>
-                          <option>60</option>
-                          <option>50</option>
-                          <option>40</option>
-                        </select>
-                        <div class="select__arrow"></div>
-                      </div>
-                      <div class="select">
-                        <label class = 'selectLabel'>STD Threshold</label>
-                        <select name ='stds_list'>
-                          <option>4</option>
-                          <option>5</option>
-                          <option>6</option>
-                          <option>7</option>
-                          <option>8</option>
-                        </select>
-                        <div class="select__arrow"></div>
-                      </div>
-                      <div class="select">
-                        <label class = 'selectLabel'>Max Plot Points</label>
-                        <select name='window_size'>
-                          <option>100</option>
-                          <option>200</option>
-                          <option>300</option>
-                          <option>400</option>
-                        </select>
-                        <div class="select__arrow"></div>
-                      </div>
-                      <div class="select">
-                        <label class="selectLabel">Speed up</label>
-                        <select form ='mainForm' name='speed_up'>
-                          <option>1</option>
-                          <option>2</option>
-                          <option>4</option>
-                          <option>0.5</option>
-                          <option>0.25</option>
-                        </select>
-                        <div class="select__arrow"></div>
-                      </div>
-                    </div>
-                </div>
-            </form>
-            <input type="button" id="submitData" value="Submit">
-        </div>
-
-        <div id="tab2" class="tabcontent">                 
-            
-            <div class='startStopButtons'>
-                <input type="button" id="startPlotBtn" value="Start Plot">
-                <input type="button" id="stopPlotBtn" value="Stop Plot">
-        
+                <fieldset>
+                    <legend>Actions</legend>
+                    <input type="button" id="startPlotBtn" value="Start Plot">
+                    <input type="button" id="stopPlotBtn" value="Stop Plot">
+                </fieldset>
             </div>
-            
-            <div id="graph"></div>
-
+            <div id="graph" class="predictGraphDiv"></div>
         </div>
 
 
-        
-
+        <script type="text/javascript" src="static/plot.js"></script>
+        <script type="text/javascript" src="static/messageHandler.js"></script>
     </div>
-    
-
-    <script type="text/javascript" src="static/plot.js"></script>
-    <script type="text/javascript" src="static/messageHandler.js"></script>
-    <script src="static/tabs.js" charset="utf-8"></script>
-
 </body>
 </html>

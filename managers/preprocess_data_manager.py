@@ -9,34 +9,36 @@ class PreprocessDataManager:
     The class uses a generator that it receives from a data source.  A timeseries data point is received
     and the method, process_point() is used to process the point.   When the point has been processed, it
     yields a message that contains json data that will be consumed.
-
     """
-    def __init__(self, data_source, regress_group_size, points_group_size, col_name, anomaly_std_factor, max_window_size, speed_up, csv_file_name=None):
+    def __init__(self, regress_group_size, plot_scrolling_size, col_name, anomaly_std_factor,
+                 points_per_sec, csv_file_name=None):
         """
         :param regress_group_size:  Size in data points of how many points will be included in the linear regression
         calculation.
         :type regress_group_size: int
-        :param points_group_size: How many data points should be consumed in one batch.  Currently only the value
-        of 1 is used.
+        :param plot_scrolling_size How many pts will be displayed before they scroll off the page.
+        :type: int
         :param col_name: Name of data column that holds the data to be processed
         :type: string
         :param anomaly_std_factor: Used to define the threshold that defines an anomaly.  This factor will
         be multiplied by the data's STD to define the threshold.
         :type: int
+        :param points_per_sec How many points per second will be generated
+        :type: int
         :param csv_file_name: Name of csv file to be used as the data source
         :type: string
         """
         self.row_counter = 0
-        self.data_source = data_source
-        self.regress_plot_size = regress_group_size  # Number of points used to calculate linear regression line
-        self.points_group_size = points_group_size  # Not used in this first version
+        self.regress_plot_size = int(regress_group_size)  # Number of points used to calculate linear regression line
+        #self.points_group_size = int(points_group_size)  # Not used in this first version
+        self.plot_scrolling_size = int(plot_scrolling_size)
         self.col_name = col_name  # col name of feature to plot
+        self.points_per_sec = points_per_sec
         self.file_name = csv_file_name
+        self.init_plot()   # Initialize plot
         self.regress_buffX = []   # Fixed size buffer.  Size is limited to value of self.regress_plot_size
         self.regress_buffY = []
-        self.anomaly_std_factor = anomaly_std_factor  # Defines how many STD that determine an anomaly
-        self.speed_up = speed_up
-        self.max_window_size = max_window_size
+        self.anomaly_std_factor = int(anomaly_std_factor)  # Defines how many STD that determine an anomaly
 
 
     def process_point(self):
@@ -55,44 +57,24 @@ class PreprocessDataManager:
              line.  This y difference will be used in the plot.
         (5)  Compare the y difference with the value (self.anomaly_std_factor * STD).  If the value is outside
              this calculation, set the plot color to 'red'.
-
         The above calculated data is wrapped into a Dictionary and is converted to JSON.  This JSON is then yielded
         to the listener on the browser side, where it is plotted.
-
         :return: none
         ..notes:: This function has no return.  Instead, it yields events that allow the listener (in this case, a
         javascript EventSource object) to consume the data in the messages.
         ..notes::  The yielded JSON from this function is generic so that any renderer can make the plots.
-
         """
         x_old_idx = 0
         y_percent_diff_old = 0
         plot_color = 'green'
-        graphRange = [0,1]
-
-        sdm = SynthesizeDataManager()
         # This generator yields when one point is available from the data source
-        if (self.data_source == 'csv'):
-            gen = sdm.csv_line_reader(self.file_name, self.col_name, self.speed_up)  # this is a generator
-        elif (self.data_source == 'postgres'):
-            gen = sdm.load_sensor(self.col_name, self.speed_up)
-        else:
-            gen = sdm.synthesize_data(self.col_name, self.speed_up)
-            
-
-        row = next(gen, None)  # list of two strings
-        graphRange = sdm.return_range()
-        json_data = {'range':graphRange}
-
-        yield "event: initialize\ndata: " + json.dumps(json_data) + "\n\n"   # Initialize plot
-
+        gen = SynthesizeDataManager.csv_line_reader(self.file_name, self.col_name, self.points_per_sec)  # this is a generator
         while True:
             # print("rowcounter: {}".format(self.row_counter))
             # Use the generator's next() with a param of None.  If the generator is out of data, next() will
             # return None.
             row = next(gen, None)  # list of two strings
             if row is None:
-                print('row is none')
                 # print("Job Finished")
                 # Generator is exhausted, yield message "jobfinished"
                 yield "event: jobfinished\ndata: " + "none" + "\n\n"
@@ -129,12 +111,12 @@ class PreprocessDataManager:
                     json_data = self.create_json(timestamp, sensor_val,
                                                  x_start_p, x_end_p, y_start_p, y_end_p,
                                                  x_old_p, x_new_p, y_percent_diff_old, y_percent_diff,
-                                                 plot_color, self.row_counter, self.max_window_size)
+                                                 plot_color, self.row_counter)
                     # print("Regress slope: {}   Regress intspt: {}".format(fit[0],fit[1]))
-                    print("Server json data: {} ".format(json_data) )
+                    # print("Server json data: {} ".format(json_data) )
                     y_percent_diff_old = y_percent_diff_new
                     plot_color = 'green'
-                    self.row_counter = self.row_counter + self.points_group_size
+                    self.row_counter = self.row_counter + 1
                     yield "event: update\ndata: " + json.dumps(json_data) + "\n\n"
                 else:
                     # We are here because the buffer window is not yet full.  The buffer window consists of
@@ -142,15 +124,14 @@ class PreprocessDataManager:
                     # when the app starts.  The buffer window is used to calculate the running
                     # regression line.  So while we are waiting for the buffer window to fill, we still plot
                     # the sensor data as points.
-                    self.row_counter = self.row_counter + self.points_group_size
+                    self.row_counter = self.row_counter + 1
                     json_data = self.create_json(timestamp, sensor_val, None, None, None, None, None,
-                                                 None, None, None, None, None, max_window_size=self.max_window_size)
+                                                 None, None, None, None, None)
                     yield "event: update\ndata: " + json.dumps(json_data) + "\n\n"
                     next(gen)
 
     def __get_endpoints_for_regr_line(self, regr_fit, regress_start_index):
         """Private function for calculating endpoints of a regression line
-
         :param regr_fit: The linear regression object
         :type: ndarray as returned from numpy.polyfit()
         :param regress_start_index: index of starting point in buffer,  usually 0
@@ -168,7 +149,6 @@ class PreprocessDataManager:
 
     def __calc_percent_diffs(self, regr_fit):
         """Calculate y diffs between data points and regression line for all points in the buffer
-
         :param regr_fit: The numpy.polyfit()
         :return: Array of errors, where error is the difference between each point's y value and the corresponding
         y value of the regression line
@@ -185,7 +165,6 @@ class PreprocessDataManager:
 
     def calculate_percent_diff_for_curr_point(self, x_index, regr_fit):
         """Calculate y diff at the x value (x_index) between the data point and the regression line
-
         :param x_index: Index of the current point ( Index is relative the points in the buffer).  This index ranges
         from 0 to len(self.regress_buffX) -1
         :param regr_fit: regr_fit: The numpy.polyfit()
@@ -199,7 +178,6 @@ class PreprocessDataManager:
 
     def get_fit_function(self, xarr, yarr):  # pass regress_buffX and regress_buffY
         """Get the numpy.polyfit() as calculated by the data currently in the buffer
-
         :param xarr: array of x values of points in the buffer
         :param yarr: array of y values of points in the buffer
         :return: numpy.polyfit()
@@ -222,9 +200,8 @@ class PreprocessDataManager:
 
     def create_json(self, timestamp, sensor_val,
                         x1, x2, y1, y2, x_old_p, x_new_p, y_percent_diff_old,
-                        y_percent_diff, plot_color, row_counter, max_window_size):
+                        y_percent_diff, plot_color, row_counter):
         """Put all parameters into a JSON string
-
         :param timestamp:
         :param sensor_val:
         :param x1:
@@ -248,20 +225,17 @@ class PreprocessDataManager:
                               'y_diff1': y_percent_diff_old,
                               'y_diff2': y_percent_diff,
                               'plot_color': plot_color,
-                              'row_counter': row_counter,
-                              'max_window_size': max_window_size
+                              'row_counter': row_counter
                               }
                      }
         return plot_dict
 
-    def init_plot(self, graphRange):
+    def init_plot(self):
         """Currently not used"""
         print("PreprocessDataManager.init_plot()")
-        json_data = self.create_json(graphRange)
-        yield "event: initialize\ndata: " + json.dumps(json_data) + "\n\n"
+        yield "event: initialize\ndata: " + "none" + "\n\n"
 
     def stop_plot(self):
         """Currently not used"""
         print("PreprocessDataManager.stop_plot()")
         yield "event: stop\ndata: " + "none" + "\n\n"
-
