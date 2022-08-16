@@ -45,6 +45,7 @@
 8. When you first gain access to JupyterHub, a configuration screen gives you the opportunity to select a notebook image and configure the deployment size and environment variables for your data science project. You can customize the following options:  Notebook image, Deployment size and Environment variables
 
     ![](/workshop/images/Notebookserveroptions.png)
+9.  Choose **Tensorflow** Notebook image, **Small** Container size.  You will not be entering **Environment Variables**.  Once you have chosen these options click the **Start Server** button.
 
 ## Git Clone the Edge Anomaly Detection Project 
 1. Click on the Git icon on the left of your JupyterHub notebook. 
