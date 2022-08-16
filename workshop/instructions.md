@@ -5,9 +5,9 @@
 
 * [Log into RHODS](#logging-into-rhods)
 * [Git Clone the Edge Anomaly Detection Project](#git-clone-the-edge-anomaly-detection-project)
-* [Generate Sensor Data](#generate-sensor-data)
-* [Select Slice](#select-slice)
-* [Stream Sensor Data](#stream-sensor-data)
+* [Run the Anomaly Detection notebook](#run-anomaly-detection-notebook)
+* [Package the application](#select-slice)
+* [View Application via browser](#stream-sensor-data)
 
 </p>
 </details>
@@ -19,6 +19,8 @@
     ![](/workshop/images/workshop_attendees.png)
 
 2. Navigate Red Hat OpenShift Data Science (RHODS).
+
+   ![](/workshop/images/workshop_attendees.png)
 
 3. Click on **Log in with OpenShift** and then click on **WorkshopAttendees** and log in with your credentials.
 
@@ -34,11 +36,11 @@
 
 6. Again, click on **WorkshopAttendees** and log in with your credentials and click on **Allow selected permissions**
 
-6. Choose **Standard Data Science** as the notebook image and select a **small** notebook size.
+7. Choose **Standard Data Science** as the notebook image and select a **small** notebook size.
 
     ![](/workshop/images/jupyterhub_nb.png)
 
-7. Click on "Start Server"
+8. Click on "Start Server"
 
 ## Git Clone the Edge Anomaly Detection Project 
 1. Click on the Git icon on the left of your JupyterHub notebook. 
