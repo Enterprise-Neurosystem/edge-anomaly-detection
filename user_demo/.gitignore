@@ -1,5 +1,0 @@
-# Ignore PostgreSQL admin credentials
-database.ini
-
-# Ignore all checkpoints
-* .ipynb_checkpoints
