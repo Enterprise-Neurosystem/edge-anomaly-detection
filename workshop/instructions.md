@@ -26,9 +26,9 @@
 
    ![](/workshop/images/loginwithopenshift.png)
 
-4. Click on **Log in with OpenShift** and then click on **WorkshopAttendees** and log in with your credentials.
+4. Click on **WorkshopAttendees** and log in with your credentials.
 
-    ![](/workshop/images/openshift_login.png)
+    ![](/workshop/images/workshop_attendees.png)
 
 5. Click on **Allow selected permissions** to authorize access. 
 
@@ -40,9 +40,9 @@
 
 7. Again, click on **WorkshopAttendees** and log in with your credentials and click on **Allow selected permissions**
 
-8. Choose **Standard Data Science** as the notebook image and select a **small** notebook size.
+8. Start your Jupyter notebook server.  Red Hat OpenShift Data Science is a managed cloud service for data scientists and developers of artificial intelligence (AI) applications. It provides a fully supported environment in which to rapidly develop, train, and test machine learning models in the public cloud before deploying them in production. When you use OpenShift Data Science, you are running in  Red Hat OpenShift Dedicated or Red Hat OpenShift Service on AWS, which simplifies cloud operations. Let’s launch the Jupyter Notebook server and set up options!  Click the Launch application url.
 
-    ![](/workshop/images/jupyterhub_nb.png)
+    ![](/workshop/images/Notebookserveroptions.png)
 
 9. Click on "Start Server"
 
