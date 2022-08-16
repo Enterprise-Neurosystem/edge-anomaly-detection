@@ -42,10 +42,17 @@
 
    ![](/workshop/images/workshop_attendees.png)
 
-8. When you first gain access to JupyterHub, a configuration screen gives you the opportunity to select a notebook image and configure the deployment size and environment variables for your data science project. You can customize the following options:  Notebook image, Deployment size and Environment variables
+8. When you first gain access to JupyterHub, a configuration screen gives you the opportunity to select a notebook image and configure the deployment size and environment variables for your data science project.
 
     ![](/workshop/images/Notebookserveroptions.png)
-9.  Choose **Tensorflow** Notebook image, **Small** Container size.  You will not be entering **Environment Variables**.  Once you have chosen these options click the **Start Server** button.
+
+9. Choose **Tensorflow** Notebook image, **Small** Container size.  You will not be entering **Environment Variables**.  Once you have chosen these options click the **Start Server** button.  Once the server starts you will be taken into a Jupyter Hub IDE (Integrated Development Environment).  It is in this environment that we can look at our sensor data and determine how to visualize and detect anomalies.
+    ![](/workshop/images/Notebookserveroptions.png)
+
+10. Welcome to Jupyter Lab!   After starting your server, three sections appear in JupyterLab's launcher window:  Notebook, Console and Other.  On the left side of the navigation paine, locate the explorer panel.  This panel is where you can create and manager your project directories.
+    ![](/workshop/images/JupyterNotebookIDE.png)
+
+11. To start working we are going to clone the Edge Anomaly Detection project from github.
 
 ## Git Clone the Edge Anomaly Detection Project 
 1. Click on the Git icon on the left of your JupyterHub notebook. 
