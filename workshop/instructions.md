@@ -18,9 +18,9 @@
 
     ![](/workshop/images/workshop_attendees.png)
 
-2. Navigate Red Hat OpenShift Data Science (RHODS).
+2. Upon successful login, you will see the Red Hat OpenShift Dedicated environment.  This is a kubernetes platform from which you can create containerized applications.  Part of this environment is the Red Hat OpenShift Data Science platform.  It is accessed by selecting the launcher icon in the upper right corner.
 
-   ![](/workshop/images/workshop_attendees.png)
+   ![](/workshop/images/launchericon.png)
 
 3. Click on **Log in with OpenShift** and then click on **WorkshopAttendees** and log in with your credentials.
 
