@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Response, request
 from managers.preprocess_data_manager import PreprocessDataManager
-from utils.data_file_manager import DataFileManager
+from managers.data_file_manager import DataFileManager
 from os.path import join
 app = Flask(__name__)
 
@@ -10,7 +10,7 @@ application = app
 
 @app.route('/')
 def main():
-    file_names = DataFileManager.get_file_names_in_path('data')
+    file_names = DataFileManager.get_file_names_in_path('static/data')
     return render_template('main.html', filenames=file_names)
 
 
@@ -29,9 +29,12 @@ def generate_data():
     points_per_sec = int(request.args.get('points_per_sec'))
     col_name = 'pressure'
 
+    path = 'static/data'
+    joinedfilename = join(path, file_name)
+
     pdm = PreprocessDataManager(regression_group_size,
                                 plot_scrolling_size, col_name, anomaly_std_factor, points_per_sec,
-                                csv_file_name=file_name)
+                                csv_file_name=joinedfilename)
     pdm.process_point()
     return Response(pdm.process_point(), mimetype='text/event-stream')
 
