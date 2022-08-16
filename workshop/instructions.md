@@ -64,9 +64,13 @@
 3. Paste the following URL and click **Clone**.
  
     ```
-    https://github.com/Enterprise-Neurosystem/edge-synthetic-data-generator.git
+    https://github.com/Enterprise-Neurosystem/edge-anomaly-detection.git
     ```
-## Generate Sensor Data
+4. After you have cloned your repository, it will appear as a 'directory' under the **Name** pane.
+
+   ![](/workshop/images/namePane.png)
+
+## Run the Anomaly Detection Notebook
 
 1. Now that we've cloned the project, let's generate synthetic sensor data from a notebook. 
 
