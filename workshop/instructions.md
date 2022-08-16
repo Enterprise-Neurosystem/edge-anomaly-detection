@@ -41,12 +41,10 @@
 7. Again, click on **WorkshopAttendees** and log in with your credentials and click on **Allow selected permissions**
 
    ![](/workshop/images/workshop_attendees.png)
-8. 
-9. Starting your Jupyter notebook server.  Red Hat OpenShift Data Science is a managed cloud service for data scientists and developers of artificial intelligence (AI) applications. It provides a fully supported environment in which to rapidly develop, train, and test machine learning models in the public cloud before deploying them in production. When you use OpenShift Data Science, you are running in  Red Hat OpenShift Dedicated or Red Hat OpenShift Service on AWS, which simplifies cloud operations. Let’s launch the Jupyter Notebook server and set up options!  Click the Launch application url.
+
+8. When you first gain access to JupyterHub, a configuration screen gives you the opportunity to select a notebook image and configure the deployment size and environment variables for your data science project. You can customize the following options:  Notebook image, Deployment size and Environment variables
 
     ![](/workshop/images/Notebookserveroptions.png)
-
-10. Click on "Start Server"
 
 ## Git Clone the Edge Anomaly Detection Project 
 1. Click on the Git icon on the left of your JupyterHub notebook. 
