@@ -18,29 +18,33 @@
 
     ![](/workshop/images/workshop_attendees.png)
 
-2. Upon successful login, you will see the Red Hat OpenShift Dedicated environment.  This is a kubernetes platform from which you can create containerized applications.  Part of this environment is the Red Hat OpenShift Data Science platform.  It is accessed by selecting the launcher icon in the upper right corner.
+2. Upon successful login, you will see the Red Hat OpenShift Dedicated environment.  This is a kubernetes platform from which you can create containerized applications.  Part of this environment is the Red Hat OpenShift Data Science platform.  It is accessed by **clicking** the **launcher** icon in the upper right corner.
 
    ![](/workshop/images/launchericon.png)
 
-3. Click on **Log in with OpenShift** and then click on **WorkshopAttendees** and log in with your credentials.
+3. Upon clicking the **Launcher Icon** you will see another login screen.  Click the **Log in with OpenShift** icon.
+
+   ![](/workshop/images/loginwithopenshift.png)
+
+4. Click on **Log in with OpenShift** and then click on **WorkshopAttendees** and log in with your credentials.
 
     ![](/workshop/images/openshift_login.png)
 
-4. Click on **Allow selected permissions** to authorize access. 
+5. Click on **Allow selected permissions** to authorize access. 
 
     ![](/workshop/images/authorize_access.png)
 
-5. Once in the RHODS dashboard, click on the **Launch Application** hyperlink in the JupyterHub tile.
+6. Once in the RHODS dashboard, click on the **Launch Application** hyperlink in the JupyterHub tile.
 
     ![](/workshop/images/rhods_jupyterhub.png)
 
-6. Again, click on **WorkshopAttendees** and log in with your credentials and click on **Allow selected permissions**
+7. Again, click on **WorkshopAttendees** and log in with your credentials and click on **Allow selected permissions**
 
-7. Choose **Standard Data Science** as the notebook image and select a **small** notebook size.
+8. Choose **Standard Data Science** as the notebook image and select a **small** notebook size.
 
     ![](/workshop/images/jupyterhub_nb.png)
 
-8. Click on "Start Server"
+9. Click on "Start Server"
 
 ## Git Clone the Edge Anomaly Detection Project 
 1. Click on the Git icon on the left of your JupyterHub notebook. 
