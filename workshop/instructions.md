@@ -4,7 +4,7 @@
 <p>
 
 * [Log into RHODS](#logging-into-rhods)
-* [Git Clone the Edge Synthetic Generator Project](#git-clone-the-edge-synthetic-generator-project)
+* [Git Clone the Edge Anomaly Detection Project](#git-clone-the-edge-anomaly-detection-project)
 * [Generate Sensor Data](#generate-sensor-data)
 * [Select Slice](#select-slice)
 * [Stream Sensor Data](#stream-sensor-data)
@@ -40,7 +40,7 @@
 
 7. Click on "Start Server"
 
-## Git Clone the Edge Synthetic Generator Project 
+## Git Clone the Edge Anomaly Detection Project 
 1. Click on the Git icon on the left of your JupyterHub notebook. 
 
 2. Click on the **Clone a Repository** button.
