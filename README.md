@@ -11,7 +11,7 @@ This web app allows you to broadcast various sources of data in real time
 1. Trevor Royer
 1. Troy Nelson
 
-##Meeting Information
+## Meeting Information
 Meetings are held every Thursday, 9-10 MST
 
 Contact Audrey Reznik (areznik@redhat.com) for questions/comments/contributions.
