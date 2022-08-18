@@ -16,7 +16,7 @@
 
 1. Go to the [OpenShift console](https://console-openshift-console.apps.ieee.8goc.p1.openshiftapps.com/) and click on **WorkshopAttendees** and log in with your credentials.
 
-    ![](/workshop/images/workshop_attendees.png)
+   ![](/workshop/images/workshop_attendees.png)
 
 2. Upon successful login, you will see the Red Hat OpenShift Dedicated environment.  This is a kubernetes platform from which you can create containerized applications.  Part of this environment is the Red Hat OpenShift Data Science platform.  It is accessed by **clicking** the **launcher** icon in the upper right corner.
 
@@ -50,7 +50,7 @@
 
 10. Welcome to Jupyter Lab!   After starting your server, three sections appear in JupyterLab's launcher window:  Notebook, Console and Other.  On the left side of the navigation paine, locate the explorer panel.  This panel is where you can create and manager your project directories.
    
-11. ![](/workshop/images/JupyterNotebookIDE.png)
+   ![](/workshop/images/JupyterNotebookIDE.png)
 
 12. To start working we are going to clone the Edge Anomaly Detection project from github.
 
