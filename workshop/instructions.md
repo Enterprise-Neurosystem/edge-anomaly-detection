@@ -72,15 +72,18 @@
 
 ## Run the Anomaly Detection Notebook
 
-1. Now that we've cloned the project, let's generate synthetic sensor data from a notebook. 
+1. Now that we've cloned the project, let's take a look at some anomaly data.  Open the notebook named `notebooks\AnomalyDetectionNotebook.ipynb` from the File Explorer tab.
+  
+2. ![](/workshop/images/AnomalyDetectionNotebook.png)
 
-2. Open the notebook named `12_generate_sensor_data.ipynb` from the File Explorer tab. 
+3. The data we will be using (casing1.csv) has 2 columns timestamp and pressure. This data has already been refactored. If you wish to look at the non-refactored data, open file static/data/casing_NotRefactored.csv. The dataset is from a gas pump that is slowly failing overtime. Let's plot this data to see what it looks like. Can we see an anomaly in the visible data?  Run Cells 1-3
 
-    ![](/workshop/images/generate_sensor_data.png)
+    ![](/workshop/images/plotCasingPressurePoints.png)
 
-3.  Run cells 1-6 by selecting each one and clicking the run button. 
+4. We can see from the above plot that the pressure decreases over time and towards the end we observe some pressure points that have extremely high values. This could be an anomaly but how do we quantify these points? What we can do is perform a linear regression. From the linear regression we can take the percent difference from the regression line and plot that line over our points. Any lines extending beyond a certain distance from our points we can then label as 'an anomaly'
+5. Run the remainder of the notebook cells.  We will produce a new plot which will show linear regression and a green line showing the percent difference from the regression line.  When this line is over a certain percentage away from the average linear regression we color it red, to signify that it is an anomaly.  Look at notebooks/anomaly2.png
 
-    ![](/workshop/images/run_cells.png)
+    ![](/workshop/images/anomaly2.png)
 
 ## Select Slice
 
