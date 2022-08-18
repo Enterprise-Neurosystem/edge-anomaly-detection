@@ -49,9 +49,10 @@
 9. Choose **Tensorflow** Notebook image, **Small** Container size.  You will not be entering **Environment Variables**.  Once you have chosen these options click the **Start Server** button.  Once the server starts you will be taken into a Jupyter Hub IDE (Integrated Development Environment).  It is in this environment that we can look at our sensor data and determine how to visualize and detect anomalies.
 
 10. Welcome to Jupyter Lab!   After starting your server, three sections appear in JupyterLab's launcher window:  Notebook, Console and Other.  On the left side of the navigation paine, locate the explorer panel.  This panel is where you can create and manager your project directories.
-    ![](/workshop/images/JupyterNotebookIDE.png)
+   
+11. ![](/workshop/images/JupyterNotebookIDE.png)
 
-11. To start working we are going to clone the Edge Anomaly Detection project from github.
+12. To start working we are going to clone the Edge Anomaly Detection project from github.
 
 
 ## Git Clone the Edge Anomaly Detection Project 
@@ -74,7 +75,7 @@
 
 1. Now that we've cloned the project, let's take a look at some anomaly data.  Open the notebook named `notebooks\AnomalyDetectionNotebook.ipynb` from the File Explorer tab.
   
-2. ![](/workshop/images/AnomalyDetectionNotebook.png)
+   ![](/workshop/images/AnomalyDetectionNotebook.png)
 
 3. The data we will be using (casing1.csv) has 2 columns timestamp and pressure. This data has already been refactored. If you wish to look at the non-refactored data, open file static/data/casing_NotRefactored.csv. The dataset is from a gas pump that is slowly failing overtime. Let's plot this data to see what it looks like. Can we see an anomaly in the visible data?  Run Cells 1-3
 
