@@ -109,8 +109,15 @@
 
 13. Let's take our web application and containerize it.
 
-##
+## Packaging the Anomaly Detection Web Application
 
+1. Now that the application code is working, you’re ready to package it as a container image and run it directly in OpenShift as a service that you will be able to call from any other application.
+
+2. We build the application inside OpenShift.  You can access the OpenShift Dedicated dashboard from the application switcher in the top bar of the RHODS dashboard.
+   
+   ![](/workshop/images/Switch2DeveloperView.png)
+
+4. Open your OpenShift UI and switch to the developer view from the menu on the top left:
 
 
 
