@@ -117,11 +117,21 @@
    
    ![](/workshop/images/LauncherIcon.png)
 
-4. Open your OpenShift UI and switch to the developer view from the menu on the top left:
+3. Open your OpenShift UI and switch to the developer view from the menu on the top left:
 
    ![](/workshop/images/Switch2DeveloperView.png)
 
+4. Make sure you are in the project that was assigned to you:
 
+   ![](/workshop/images/UserProject1.png)
 
+5. From the +Add menu, click the From Git option:
 
+   ![](/workshop/images/AddGitRepo.png)
 
+6. In the Git Repo URL field, enter 
+
+    ```
+    https://github.com/Enterprise-Neurosystem/edge-anomaly-detection.git
+    ```
+   ![](/workshop/images/ImportFromGit.png)
