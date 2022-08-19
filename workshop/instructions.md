@@ -88,8 +88,14 @@
 
 ## Creating a Web UI for our algorithm.  
 
-1. We have created a Web UI in which users can choose which dataset they wish to view anomalies for.  
+1. We have created a Web UI in which users can choose which dataset they wish to view anomalies for.  The Web UI consists of an HTML page in which users can select different options for plotting such as: Data Source, Regression Group Size, STD Threshold, Plot Scrolling Size, Points per Second.
+2. Data Source - currently you can choose the default casing1.csv which we have prepared.
+3. Regression Group Size -
+4. STD Threshold - How many standard deviations, from the regression line, do you wish to set before anything above that threshold is listed as an anomaly
+5. Plot Scrolling Size - how many points are plotted in the plot 'window' at any one time
+6. Points per Second - how many pressure points are plotted per second
 
+7. The Web UI is tied to an HTML form which eventually sends its options to plot.js which plots the graph.  We are not going to go into detail as to how th Let's go ahead and containerize this application and deploy it on OpenShift.
 
 
 
