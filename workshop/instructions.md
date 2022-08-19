@@ -82,7 +82,7 @@
     ![](/workshop/images/plotCasingPressurePoints.png)
 
 4. We can see from the above plot that the pressure decreases over time and towards the end we observe some pressure points that have extremely high values. This could be an anomaly but how do we quantify these points? What we can do is perform a linear regression. From the linear regression we can take the percent difference from the regression line and plot that line over our points. Any lines extending beyond a certain distance from our points we can then label as 'an anomaly'
-5. Run the remainder of the notebook cells.  We will produce a new plot which will show linear regression and a green line showing the percent difference from the regression line.  When this line is over a certain percentage away from the average linear regression we color it red, to signify that it is an anomaly.  Look at notebooks/anomaly2.png
+5. Run the remainder of the notebook cells.  We will produce a new plot which will show linear regression and a green line showing the percent difference from the regression line.  When this line is over a certain percentage away from the average linear regression we color it red, to signify that it is an anomaly.  To view our new plot, open notebooks/anomaly2.png
 
     ![](/workshop/images/anomaly2.png)
 
@@ -107,13 +107,11 @@
 
 12. The Web UI uses an HTML FORM which upon 'submit' posts its options to plot.js which in turn uses services to plot the graph.  In this workshop we will not go into detail as to how we set up the services, templates and static scripts.  Let's go ahead and containerize this application and deploy it on OpenShift.
 
-13. Let's now take our web application and containerize it.
-
 ## Packaging the Anomaly Detection Web Application
 
-1. Now that the application code is working, you’re ready to package it as a container image and run it directly in OpenShift as a service that you will be able to call from any other application.
+1. Now that the application code is working, you’re ready to package it as a container image and run it directly in OpenShift as a web application.
 
-2. We build the application inside OpenShift.  You can access the OpenShift Dedicated dashboard from the application switcher in the top bar of the RHODS dashboard.
+2. We will build the web application inside OpenShift.  You can access the OpenShift Dedicated dashboard from the application switcher in the top bar of the RHODS dashboard.
    
    ![](/workshop/images/LauncherIcon.png)
 
@@ -156,12 +154,12 @@
 
 ## View Application via Browser
 
-13. To view your containerized application in a browser, click the URL icon in the topology view.
+1. To view your containerized application in a browser, click the URL icon in the topology view.
 
    ![](/workshop/images/ClickURL.png)
    
-14. Your containerized Anomaly Detection application will now appear in a browser window.  Try the various options (.e.g STD Threshold) that we discussed earlier.
+2. Your containerized Anomaly Detection application will now appear in a browser window.  Try the various options (.e.g STD Threshold) that we discussed earlier.
 
    ![](/workshop/images/AnomalyDetectionApplication.png)
    
-15. You are now finished with this part of the workshop.  Next, you will be looking at how we generate Synthetic Data.
+3. You are now finished with this part of the workshop.  Next, you will be looking at how we generate Synthetic Data.
