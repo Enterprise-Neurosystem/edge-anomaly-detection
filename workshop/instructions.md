@@ -135,3 +135,35 @@
     https://github.com/Enterprise-Neurosystem/edge-anomaly-detection.git
     ```
    ![](/workshop/images/ImportFromGit.png)
+
+7. Next, change the BUILDER PYTHON to Python 3.8 (UBI7).  Click Edit Import Strategy, then select 3.8 - ubi7 from the drop down list.
+
+   ![](/workshop/images/ImportStrategy.png)
+
+8. If you continue to scroll down, you will see that everything is automatically selected to create a deployment of your application, as well as a route through which you will be able to access it. Everything is almost ready. 
+
+9. Make certain to name your app.  For example:  edge-anomaly-detection
+
+   ![](/workshop/images/GeneralOptionsCreateContainer.png)
+
+10. Proceed with clicking the 'Create' button to create your containerized application.
+
+11. The automated build process will take a few minutes. Some alerts may appear if OpenShift tries to deploy the application while the build is still running, but that’s OK. Then OpenShift will deploy the application (rollout), and in the topology view, you should obtain a screen similar to the following screen capture.
+
+   ![](/workshop/images/BuildingApp.png)
+
+12. Once your application has been containerized and deployed, click the topology view to view an icon of your application
+
+  ![](/workshop/images/TopologyView.png)
+  
+## View Application via Browser
+
+13. To view your containerized application in a browser, click the URL icon in the topology view.
+
+   ![](/workshop/images/ClickURL.png)
+   
+14. Your containerized Anomaly Detection application will now appear in a browser window.  Try the various options (.e.g STD Threshold) that we discussed earlier.
+
+   ![](/workshop/images/AnomalyDetectionApplication.png)
+   
+15. You are now finished with this part of the workshop.  Next, you will be looking at how we generate Synthetic Data.
