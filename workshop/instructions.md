@@ -105,8 +105,11 @@
 
    ![](/workshop/images/AnomalyDetectionWebUI.png)
 
-8. The Web UI uses an HTML FORM which upon 'submit' posts its options to plot.js which in turn uses some services to plots the graph.  We are not going to go into detail as to how th Let's go ahead and containerize this application and deploy it on OpenShift.
+12. The Web UI uses an HTML FORM which upon 'submit' posts its options to plot.js which in turn uses some services to plots the graph.  We are not going to go into detail as to how th Let's go ahead and containerize this application and deploy it on OpenShift.
 
+13. Let's take our web application and containerize it.
+
+##
 
 
 
