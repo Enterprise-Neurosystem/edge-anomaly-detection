@@ -89,14 +89,21 @@
 ## Creating a Web UI for our algorithm.  
 
 1. We have created a Web UI in which users can choose which dataset they wish to view anomalies for.  The Web UI consists of an HTML page in which users can select different options for plotting such as: Data Source, Regression Group Size, STD Threshold, Plot Scrolling Size, Points per Second.
-2. Data Source - currently you can choose the default casing1.csv which we have prepared.
-3. Plot Parameters which includes: Regression Group Size, STD Threshold, Plot Scrolling Size and Points per Second.
-4.      Regression Group Size - 
-5.      STD Threshold - How many standard deviations, from the regression line, do you wish to set before anything above that threshold is listed as an anomaly
-6.      Plot Scrolling Size - how many points are plotted in the plot 'window' at any one time
-7.      Points per Second - how many pressure points are plotted per second
 
    ![](/workshop/images/AnomalyDetectionOptions.png)
+
+2. There are 3 sections within the Web UI:  Data Source, Plot Parameters and Actions
+3. Data Source - currently you can choose the default casing1.csv which we have prepared.
+4. Plot Parameters include: Regression Group Size, STD Threshold, Plot Scrolling Size and Points per Second.
+5.      Regression Group Size - number of points used in the calculation of a regression line
+6.      STD Threshold - How many standard deviations, from the regression line, do you wish to set before anything above that threshold is listed as an anomaly
+7.      Plot Scrolling Size - how many points are plotted in the plot 'window' at any one time
+8.      Points per Second - how many pressure points are plotted per second
+9. Actions include:  Start Plot and Stop Plot
+10.     Start Plot - will start the plotting of the plot
+11.     Stop Plot - will stop the plotting of the plot
+
+   ![](/workshop/images/AnomalyDetectionWebUI.png)
 
 8. The Web UI uses an HTML FORM which upon 'submit' posts its options to plot.js which in turn uses some services to plots the graph.  We are not going to go into detail as to how th Let's go ahead and containerize this application and deploy it on OpenShift.
 
