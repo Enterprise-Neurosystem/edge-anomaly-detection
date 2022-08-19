@@ -152,6 +152,8 @@
 
    ![](/workshop/images/TopologyView.png)
 
+12.  We are now ready to view the Anomaly Detection application in a Browser.
+
 ## View Application via Browser
 
 13. To view your containerized application in a browser, click the URL icon in the topology view.
