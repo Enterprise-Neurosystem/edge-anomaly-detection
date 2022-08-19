@@ -127,7 +127,7 @@
 
 5. From the +Add menu, click the From Git option:
 
-   ![](/workshop/images/AddGitRepo.png)
+   ![](/workshop/images/addGitRepo.png)
 
 6. In the Git Repo URL field, enter 
 
