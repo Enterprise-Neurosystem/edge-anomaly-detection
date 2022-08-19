@@ -105,9 +105,9 @@
 
    ![](/workshop/images/AnomalyDetectionWebUI.png)
 
-12. The Web UI uses an HTML FORM which upon 'submit' posts its options to plot.js which in turn uses some services to plots the graph.  We are not going to go into detail as to how th Let's go ahead and containerize this application and deploy it on OpenShift.
+12. The Web UI uses an HTML FORM which upon 'submit' posts its options to plot.js which in turn uses services to plot the graph.  In this workshop we will not go into detail as to how we set up the services, templates and static scripts.  Let's go ahead and containerize this application and deploy it on OpenShift.
 
-13. Let's take our web application and containerize it.
+13. Let's now take our web application and containerize it.
 
 ## Packaging the Anomaly Detection Web Application
 
@@ -140,22 +140,18 @@
 
    ![](/workshop/images/ImportStrategy.png)
 
-8. If you continue to scroll down, you will see that everything is automatically selected to create a deployment of your application, as well as a route through which you will be able to access it. Everything is almost ready. 
+8. If you continue to scroll down, you will see that everything is automatically selected to create a deployment of your application, as well as a route through which you will be able to access it. 
 
 9. Make certain to name your app.  For example:  edge-anomaly-detection
 
    ![](/workshop/images/GeneralOptionsCreateContainer.png)
 
-10. Proceed with clicking the 'Create' button to create your containerized application.
+10. Now we are ready to press the 'Create' button to create our containerized application.
 
 11. The automated build process will take a few minutes. Some alerts may appear if OpenShift tries to deploy the application while the build is still running, but that’s OK. Then OpenShift will deploy the application (rollout), and in the topology view, you should obtain a screen similar to the following screen capture.
 
-   ![](/workshop/images/BuildingApp.png)
+   ![](/workshop/images/TopologyView.png)
 
-12. Once your application has been containerized and deployed, click the topology view to view an icon of your application
-
-  ![](/workshop/images/TopologyView.png)
-  
 ## View Application via Browser
 
 13. To view your containerized application in a browser, click the URL icon in the topology view.
