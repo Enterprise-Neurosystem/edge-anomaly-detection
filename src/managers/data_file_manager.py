@@ -1,4 +1,4 @@
-from os import walk
+import os, glob
 
 
 class DataFileManager:
@@ -15,8 +15,6 @@ class DataFileManager:
         :return: List of filenames in the given path.  Ignores any subdirectories in the given path.
         :type: list
         """
-        file_names = []
-        for(dirpath, dirnames, filenames) in walk(path):
-            file_names.extend(filenames)
-            break  # Stop after first directory has been found and do not walk any deeper
+        file_names = [os.path.basename(x) for x in glob.glob(path + "/*.csv")]
+
         return file_names
