@@ -1,6 +1,12 @@
+import os
 import psycopg2
 from psycopg2 import pool
-import os
+
+db_hostname = os.environ.get("DB_HOSTNAME", "localhost")
+db_database = os.environ.get("DB_DATABASE", "predict-db")
+db_username = os.environ.get("DB_USERNAME", "predict-db")
+db_password = os.environ.get("DB_PASSWORD", "failureislame")
+db_port = os.environ.get("DB_PORT", "5432")
 
 
 class ConnectionPoolSingleton:
@@ -22,13 +28,16 @@ class ConnectionPoolSingleton:
         if ConnectionPoolSingleton.__INSTANCE != None:
             raise Exception("Cannot create more than one instance of this class")
         else:
-            ConnectionPoolSingleton.__connection_pool = psycopg2.pool.ThreadedConnectionPool(
-                1,
-                100,
-                host="db-anomalydetect-postgres.chanowujpkf4.us-east-1.rds.amazonaws.com",
-                user="ad_postgres",
-                password=os.environ.get("aws_secret_password"),
-                database="postgres",
+            ConnectionPoolSingleton.__connection_pool = (
+                psycopg2.pool.ThreadedConnectionPool(
+                    1,
+                    30,
+                    host=db_hostname,
+                    database=db_database,
+                    user=db_username,
+                    password=db_password,
+                    port=db_port,
+                )
             )
 
     @staticmethod
