@@ -5,7 +5,7 @@ APP_NAME="${APP_NAME:-detect}"
 NAMESPACE="${NAMESPACE:-edge-anomaly-detection}"
 
 # other parameters
-GIT_BRANCH="workshop/updates"
+GIT_BRANCH="main"
 APP_LABEL="app.kubernetes.io/part-of=${APP_NAME}"
 CONTEXT_DIR="src"
 
