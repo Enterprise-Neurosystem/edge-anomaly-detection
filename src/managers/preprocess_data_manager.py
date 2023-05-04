@@ -3,15 +3,22 @@ import json
 from managers.synthesize_data_manager import SynthesizeDataManager
 
 
-
 class PreprocessDataManager:
     """Prepares a timeseries data point for graphing
     The class uses a generator that it receives from a data source.  A timeseries data point is received
     and the method, process_point() is used to process the point.   When the point has been processed, it
     yields a message that contains json data that will be consumed.
     """
-    def __init__(self, regress_group_size, plot_scrolling_size, col_name, anomaly_std_factor,
-                 points_per_sec, csv_file_name=None):
+
+    def __init__(
+        self,
+        regress_group_size,
+        plot_scrolling_size,
+        col_name,
+        anomaly_std_factor,
+        points_per_sec,
+        csv_file_name=None,
+    ):
         """
         :param regress_group_size:  Size in data points of how many points will be included in the linear regression
         calculation.
@@ -29,17 +36,22 @@ class PreprocessDataManager:
         :type: string
         """
         self.row_counter = 0
-        self.regress_plot_size = int(regress_group_size)  # Number of points used to calculate linear regression line
-        #self.points_group_size = int(points_group_size)  # Not used in this first version
+        self.regress_plot_size = int(
+            regress_group_size
+        )  # Number of points used to calculate linear regression line
+        # self.points_group_size = int(points_group_size)  # Not used in this first version
         self.plot_scrolling_size = int(plot_scrolling_size)
         self.col_name = col_name  # col name of feature to plot
         self.points_per_sec = points_per_sec
         self.file_name = csv_file_name
-        self.init_plot()   # Initialize plot
-        self.regress_buffX = []   # Fixed size buffer.  Size is limited to value of self.regress_plot_size
+        self.init_plot()  # Initialize plot
+        self.regress_buffX = (
+            []
+        )  # Fixed size buffer.  Size is limited to value of self.regress_plot_size
         self.regress_buffY = []
-        self.anomaly_std_factor = int(anomaly_std_factor)  # Defines how many STD that determine an anomaly
-
+        self.anomaly_std_factor = int(
+            anomaly_std_factor
+        )  # Defines how many STD that determine an anomaly
 
     def process_point(self):
         """Process one point and put calculated data into a json format.
@@ -66,9 +78,11 @@ class PreprocessDataManager:
         """
         x_old_idx = 0
         y_percent_diff_old = 0
-        plot_color = 'green'
+        plot_color = "green"
         # This generator yields when one point is available from the data source
-        gen = SynthesizeDataManager.csv_line_reader(self.file_name, self.col_name, self.points_per_sec)  # this is a generator
+        gen = SynthesizeDataManager.csv_line_reader(
+            self.file_name, self.col_name, self.points_per_sec
+        )  # this is a generator
         while True:
             # print("rowcounter: {}".format(self.row_counter))
             # Use the generator's next() with a param of None.  If the generator is out of data, next() will
@@ -92,30 +106,57 @@ class PreprocessDataManager:
 
                     regress_start_idx = len(self.regress_buffX) - self.regress_plot_size
                     # Get endpoints of regression line for plotting
-                    x_start_p, x_end_p, y_start_p, y_end_p = self.__get_endpoints_for_regr_line( fit, regress_start_idx)
+                    (
+                        x_start_p,
+                        x_end_p,
+                        y_start_p,
+                        y_end_p,
+                    ) = self.__get_endpoints_for_regr_line(fit, regress_start_idx)
 
-                    y_percent_diffs = self.__calc_percent_diffs(fit)  # Get all percent diffs for all points in regress buffer
-                    std_for_buffer = np.std(y_percent_diffs)   # STD of percent diffs in regress buffer
-                    mean_for_buffer = np.mean(y_percent_diffs) # mean of percent diffs in regress buffer
+                    y_percent_diffs = self.__calc_percent_diffs(
+                        fit
+                    )  # Get all percent diffs for all points in regress buffer
+                    std_for_buffer = np.std(
+                        y_percent_diffs
+                    )  # STD of percent diffs in regress buffer
+                    mean_for_buffer = np.mean(
+                        y_percent_diffs
+                    )  # mean of percent diffs in regress buffer
 
                     # Get percent diff for the current point, which is at the end of the regress_buffX
-                    y_percent_diff = self.calculate_percent_diff_for_curr_point((len(self.regress_buffX) - 1), fit)
-                    if y_percent_diff < (mean_for_buffer - self.anomaly_std_factor * std_for_buffer) or \
-                        (y_percent_diff > (mean_for_buffer + self.anomaly_std_factor * std_for_buffer)):
-                        plot_color = 'red'
+                    y_percent_diff = self.calculate_percent_diff_for_curr_point(
+                        (len(self.regress_buffX) - 1), fit
+                    )
+                    if y_percent_diff < (
+                        mean_for_buffer - self.anomaly_std_factor * std_for_buffer
+                    ) or (
+                        y_percent_diff
+                        > (mean_for_buffer + self.anomaly_std_factor * std_for_buffer)
+                    ):
+                        plot_color = "red"
                     y_percent_diff_new = y_percent_diff
 
                     # add [x_old_point, x_new_point] and [y_percent_diff_old, y_percent_diff_new] and plot_color to json
                     x_old_p = self.regress_buffX[len(self.regress_buffX) - 2]
                     x_new_p = self.regress_buffX[len(self.regress_buffX) - 1]
-                    json_data = self.create_json(timestamp, sensor_val,
-                                                 x_start_p, x_end_p, y_start_p, y_end_p,
-                                                 x_old_p, x_new_p, y_percent_diff_old, y_percent_diff,
-                                                 plot_color, self.row_counter)
+                    json_data = self.create_json(
+                        timestamp,
+                        sensor_val,
+                        x_start_p,
+                        x_end_p,
+                        y_start_p,
+                        y_end_p,
+                        x_old_p,
+                        x_new_p,
+                        y_percent_diff_old,
+                        y_percent_diff,
+                        plot_color,
+                        self.row_counter,
+                    )
                     # print("Regress slope: {}   Regress intspt: {}".format(fit[0],fit[1]))
                     # print("Server json data: {} ".format(json_data) )
                     y_percent_diff_old = y_percent_diff_new
-                    plot_color = 'green'
+                    plot_color = "green"
                     self.row_counter = self.row_counter + 1
                     yield "event: update\ndata: " + json.dumps(json_data) + "\n\n"
                 else:
@@ -125,8 +166,20 @@ class PreprocessDataManager:
                     # regression line.  So while we are waiting for the buffer window to fill, we still plot
                     # the sensor data as points.
                     self.row_counter = self.row_counter + 1
-                    json_data = self.create_json(timestamp, sensor_val, None, None, None, None, None,
-                                                 None, None, None, None, None)
+                    json_data = self.create_json(
+                        timestamp,
+                        sensor_val,
+                        None,
+                        None,
+                        None,
+                        None,
+                        None,
+                        None,
+                        None,
+                        None,
+                        None,
+                        None,
+                    )
                     yield "event: update\ndata: " + json.dumps(json_data) + "\n\n"
                     next(gen)
 
@@ -145,7 +198,6 @@ class PreprocessDataManager:
         x_end_p = self.regress_buffX[x_end_idx]
         y_end_p = x_end_idx * regr_fit[0] + regr_fit[1]
         return x_start_p, x_end_p, y_start_p, y_end_p
-
 
     def __calc_percent_diffs(self, regr_fit):
         """Calculate y diffs between data points and regression line for all points in the buffer
@@ -186,7 +238,7 @@ class PreprocessDataManager:
         xarr_temp = xarr.copy()
         yarr_temp = yarr.copy()  # list of strings representing floats
 
-        xarr_temp.pop()      # Remove current point since it may be an anomaly.
+        xarr_temp.pop()  # Remove current point since it may be an anomaly.
         yarr_temp.pop()
         float_list = []  # Must convert yarr_temp to numpy array of floats.
         for item in yarr_temp:
@@ -194,13 +246,25 @@ class PreprocessDataManager:
         yarr_converted = np.array(float_list)
         # Make temp array of integers that serve as x index for points in the buffer.
         numericX = np.arange(len(xarr_temp))
-        fit = np.polyfit(numericX, yarr_converted, 1)   # deg of 1
+        fit = np.polyfit(numericX, yarr_converted, 1)  # deg of 1
 
         return fit
 
-    def create_json(self, timestamp, sensor_val,
-                        x1, x2, y1, y2, x_old_p, x_new_p, y_percent_diff_old,
-                        y_percent_diff, plot_color, row_counter):
+    def create_json(
+        self,
+        timestamp,
+        sensor_val,
+        x1,
+        x2,
+        y1,
+        y2,
+        x_old_p,
+        x_new_p,
+        y_percent_diff_old,
+        y_percent_diff,
+        plot_color,
+        row_counter,
+    ):
         """Put all parameters into a JSON string
         :param timestamp:
         :param sensor_val:
@@ -216,18 +280,18 @@ class PreprocessDataManager:
         :param row_counter:
         :return: Json string
         """
-        plot_dict = {'plotpoint': [timestamp, sensor_val],
-                     'regress': {'xs': [x1, x2],
-                                 'ys': [y1, y2]
-                                 },
-                     'calc': {'x1': x_old_p,
-                              'x2': x_new_p,
-                              'y_diff1': y_percent_diff_old,
-                              'y_diff2': y_percent_diff,
-                              'plot_color': plot_color,
-                              'row_counter': row_counter
-                              }
-                     }
+        plot_dict = {
+            "plotpoint": [timestamp, sensor_val],
+            "regress": {"xs": [x1, x2], "ys": [y1, y2]},
+            "calc": {
+                "x1": x_old_p,
+                "x2": x_new_p,
+                "y_diff1": y_percent_diff_old,
+                "y_diff2": y_percent_diff,
+                "plot_color": plot_color,
+                "row_counter": row_counter,
+            },
+        }
         return plot_dict
 
     def init_plot(self):
