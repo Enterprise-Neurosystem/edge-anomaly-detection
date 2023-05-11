@@ -53,6 +53,11 @@ ocp_setup_app(){
     -l ${APP_LABEL} \
     --overrides='{"spec":{"tls":{"termination":"edge"}}}'
 
+  # kludge - some versions of oc don't work
+  oc patch route \
+    ${APP_NAME} \
+  -p ='{"spec":{"tls":{"termination":"edge"}}}'
+
   # kludge - fix timeout for app
   oc annotate route \
     ${APP_NAME} \
