@@ -56,7 +56,9 @@ ocp_setup_app(){
   # kludge - some versions of oc don't work
   oc patch route \
     ${APP_NAME} \
-  -p ='{"spec":{"tls":{"termination":"edge"}}}'
+    -n ${NAMESPACE} \
+    --type=merge \
+    -p ='{"spec":{"tls":{"termination":"edge"}}}'
 
   # kludge - fix timeout for app
   oc annotate route \
