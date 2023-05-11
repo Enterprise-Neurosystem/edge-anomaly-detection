@@ -39,12 +39,12 @@ ocp_setup_app(){
     -n ${NAMESPACE} \
     --context-dir ${CONTEXT_DIR}
 
-  sleep 2
+  # sleep 2
 
-  # watch the build
-  oc logs \
-    bc/${APP_NAME} \
-    --follow
+  # # watch the build
+  # oc logs \
+  #   bc/${APP_NAME} \
+  #   --follow
 
   # create route
   oc expose service \
