@@ -56,6 +56,7 @@ ocp_setup_app(){
 }
 
 main(){
+  ocp_init
   ocp_setup_app
 }
 
