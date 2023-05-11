@@ -58,7 +58,7 @@ ocp_setup_app(){
     ${APP_NAME} \
     -n ${NAMESPACE} \
     --type=merge \
-    -p ='{"spec":{"tls":{"termination":"edge"}}}'
+    -p '{"spec":{"tls":{"termination":"edge"}}}'
 
   # kludge - fix timeout for app
   oc annotate route \
