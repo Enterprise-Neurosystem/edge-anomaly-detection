@@ -51,14 +51,14 @@ ocp_setup_app(){
     ${APP_NAME} \
     -n ${NAMESPACE} \
     -l ${APP_LABEL} \
-    --overrides='{"spec":{"tls":{"termination":"edge"}}}'
+    --overrides='{"spec":{"tls":{"termination":"edge","insecureEdgeTerminationPolicy":"Redirect"}}}'
 
   # kludge - some versions of oc don't work
   oc patch route \
     ${APP_NAME} \
     -n ${NAMESPACE} \
     --type=merge \
-    -p '{"spec":{"tls":{"termination":"edge"}}}'
+    -p '{"spec":{"tls":{"termination":"edge","insecureEdgeTerminationPolicy":"Redirect"}}}'
 
   # kludge - fix timeout for app
   oc annotate route \
