@@ -39,6 +39,8 @@ ocp_setup_app(){
     -n ${NAMESPACE} \
     --context-dir ${CONTEXT_DIR}
 
+  sleep 2
+
   # watch the build
   oc logs \
     bc/${APP_NAME} \

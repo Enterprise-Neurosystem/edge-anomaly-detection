@@ -8,7 +8,7 @@
 # uncomment below to run application w/o gunicorn
 
 # TODO: fix gunicorn to not ERR_INCOMPLETE_CHUNKED_ENCODING
-APP_FILE=wsgi.py
+# APP_FILE=wsgi.py
 
 # add proxy config via s2i scripts (no secrets)
 
