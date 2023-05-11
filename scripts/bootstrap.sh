@@ -37,7 +37,8 @@ ocp_setup_app(){
     --name ${APP_NAME} \
     -l ${APP_LABEL} \
     -n ${NAMESPACE} \
-    --context-dir ${CONTEXT_DIR}
+    --context-dir ${CONTEXT_DIR} \
+    --follow
 
   # create route
   oc expose service \
