@@ -9,3 +9,4 @@ plotly==5.5.0
 psycopg2-binary==2.9.3
 scikit-learn==1.1.1
 torch==1.11.0
+Werkzeug==2.2.2
